@@ -1,8 +1,9 @@
 import React from 'react';
 
-import TableRowComponent from "./TableRowComponent";
+// import TableRowComponent from "./TableRowComponent";
 
 import "../../../styles/styles.scss";
+import "./TableStyles.scss";
 
 /**
  * props: renderData, editableRows, tableData
@@ -15,7 +16,7 @@ export default class TableComponent extends React.Component {
   renderHead() {
     let head = [];
     this.props.columns.forEach(col => {
-      head.push(<th>{col.value}</th>);
+      head.push(<th key={col.key}>{col.value}</th>);
     });
     return head;
   }
@@ -26,7 +27,7 @@ export default class TableComponent extends React.Component {
     console.log("this.props.tableData", this.props.tableData);
     this.props.tableData.forEach(row => {
       console.log("row:", row);
-      rows.push(<tr><td>hello</td></tr>);
+      rows.push(<tr className="bodyRow"><td>hello</td></tr>);
     })
     console.log("rows:", rows);
     return rows;
@@ -35,7 +36,7 @@ export default class TableComponent extends React.Component {
   render() {
     return (
       <table className="table-component">
-        <thead><tr>{this.renderHead()}</tr></thead>
+        <thead><tr className="headerRow">{this.renderHead()}</tr></thead>
         <tbody>{this.renderBody()}</tbody>
       </table>
     );

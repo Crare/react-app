@@ -1,6 +1,7 @@
 @import "../../../styles/styles.scss";
 
 .header-view {
+  flex: 0 1 auto;
   padding: 32px;
   background-color: $gray;
   color: $white;
