@@ -1,0 +1,13 @@
+@import "../../../styles/styles.scss";
+
+.header-view {
+  padding: 32px;
+  background-color: $gray;
+  color: $white;
+}
+
+.header-title {
+  font-size: $font_big;
+  font-weight: 600;
+  text-align: left;
+}

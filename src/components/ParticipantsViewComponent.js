@@ -21,12 +21,11 @@ export class ParticipantsViewComponent extends React.Component {
     this.participants = this.p_service.getParticipantList(this.amountOfParticipants);
     // console.log(this.participants);
   }
-
-  renderTable = () => {
-    console.log(this.participants);
+  
+  render() {
     return (
       <div>
-        <div className="title"><h1>Participants</h1></div>
+        <div className="title">List of participants</div>
         <div>
           <TableComponent
             tableData={this.participants}
@@ -34,15 +33,6 @@ export class ParticipantsViewComponent extends React.Component {
             editableRows={this.editableRows}>
           </TableComponent>
         </div>
-      </div>
-      
-    );
-  }
-
-  render() {
-    return (
-      <div className="participant-view">
-        {this.renderTable()}
       </div>
     );
   }

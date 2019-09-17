@@ -1,20 +1,17 @@
 // global style folder to import
-// use: @import "../../../styles/styles.scss";
+// use: @import "../../../styles/styles.scss"; etc
 
 @import "./colors.scss";
 @import "./fonts.scss";
 
+.page-content {
+  padding: 32px;
+  background-color: $light_gray;
 
-.title h1 {
-  font-size: 30px;
-}
-
-.participant-view {
-  padding: 10px;
-}
-
-.table-component {
-  td {
-    padding: 10px;
+  .title {
+    font-size: $font_medium;
+    text-align: left;
+    color: $dark_gray;
+    font-weight: 600;
   }
 }
