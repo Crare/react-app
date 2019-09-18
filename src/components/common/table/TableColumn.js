@@ -2,6 +2,8 @@ import React from 'react';
 import { TableColumnDataType } from './TableColumnData';
 import Button from '../Button';
 
+import "../../../styles/styles.scss";
+
 export default class TableColumn extends React.Component {
 
   columnHeadClicked(data) {
@@ -36,13 +38,13 @@ export default class TableColumn extends React.Component {
     const { data, } = this.props;
     if (data.type === TableColumnDataType.HEAD) {
       return (
-        <th onClick={() => this.columnHeadClicked(data)}>
+        <th className="table-head-col" onClick={() => this.columnHeadClicked(data)}>
           {this.renderColumn()}
         </th>
       );
     } else {
       return (
-        <td onClick={() => this.columnClicked(data)}>
+        <td className="table-body-col" onClick={() => this.columnClicked(data)}>
           {this.renderColumn()}
         </td>
       );

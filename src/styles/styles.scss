@@ -4,9 +4,10 @@
 @import "./colors.scss";
 @import "./fonts.scss";
 
-.MuiSvgIcon-root {
-  fill: $icon_color;
-}
+// .MuiSvgIcon-root {
+//   fill: $icon_color !important;
+//   color: $icon_color !important;
+// } ei toimi
 
 html,
 body {
@@ -19,9 +20,35 @@ body {
 }
 
 .App {
+  height: 100%;
+}
+
+.view-container {
   display: flex;
   flex-flow: column;
   height: 100%;
+}
+
+.header {
+  padding: 32px;
+  background-color: $gray;
+  color: $white;
+  flex: 0 1 auto;
+  h1 {
+    margin-left: 16px;
+    display: inline-block;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-weight: 500;
+    padding-bottom: 16px;
+  }
+}
+
+.logo {
+  width: 32px;
+  height: 32px;
+  background-color: $white;
+  display: inline-block;
 }
 
 .page-content {
@@ -30,10 +57,11 @@ body {
   background-color: $light_gray;
 
   .title {
-    font-size: $font_medium;
+    font-size: $font_big;
     text-align: left;
     color: $dark_gray;
     font-weight: 600;
+    margin-bottom: 40px;
   }
 }
 
@@ -45,6 +73,37 @@ body {
   background-color: $white;
 }
 
-.max-width-container {
-  max-width: 912px;
+.fixed-width-container {
+  width: 912px;
+}
+
+.table {
+  width: 100%;
+  background-color: $white;
+  .table-head-row {
+    height: 48px;
+    border-bottom: 2px solid #eee;
+  }
+  .table-body-row {
+    height: 72px;
+    border-bottom: 2px solid #eee;
+  }
+  tr:first-child {
+    border-bottom: 2px solid #eee;;
+  }
+}
+.table-head-col {
+  color: $table_head_color;
+  font-size: 14px;
+  line-height: 16px; 
+  font-weight: 500;
+  text-align: left;
+  padding: 16px 24px;
+}
+.table-body-col {
+  color: $table_body_color;
+  font-size: 16px;
+  line-height: 24px; 
+  font-weight: 400;
+  padding: 24px;
 }

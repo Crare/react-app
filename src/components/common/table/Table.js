@@ -2,6 +2,8 @@ import React from 'react';
 import TableColumn from './TableColumn';
 import { TableColumnData, TableColumnDataType } from './TableColumnData';
 
+import "../../../styles/styles.scss";
+
 /**
  * Table component
  * props: columns, data, noTitle.
@@ -13,7 +15,7 @@ export default class Table extends React.Component {
   renderTableHead() {
     return (
       <thead>
-        <tr>
+        <tr className="table-head-row">
           {
             this.props.columns.map((col) => {
               let tableColumnData = new TableColumnData(col.headerText, col.dataColumn, TableColumnDataType.HEAD, col.showText);
@@ -45,7 +47,7 @@ export default class Table extends React.Component {
   renderTableRow(rowData) {
     let rowKey = rowData['id'];
     return (
-      <tr key={rowKey} onClick={() => this.rowClicked(rowData)}>
+      <tr className="table-body-row" key={rowKey} onClick={() => this.rowClicked(rowData)}>
         {
           this.props.columns.map((col) => {
             let tableColumnData = new TableColumnData(col.headerText, rowData[col.dataColumn], col.type, col.showText, col.component);
@@ -84,7 +86,7 @@ export default class Table extends React.Component {
 
   render() {
     return (
-      <table>
+      <table className="table">
         {this.renderTableHead()}
         {this.renderTableBody()}
       </table>
