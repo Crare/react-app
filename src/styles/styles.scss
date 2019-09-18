@@ -14,14 +14,10 @@ body {
   height: 100%;
 }
 
-.box {
+.App {
   display: flex;
   flex-flow: column;
   height: 100%;
-}
-
-.App {
-  display: box;
 }
 
 .page-content {
@@ -43,4 +39,8 @@ body {
   padding: 16px;
   height: 40px;
   background-color: $white;
+}
+
+.max-width-container {
+  max-width: 912px;
 }

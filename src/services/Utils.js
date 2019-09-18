@@ -1,5 +1,6 @@
 import Participant from "../dto/Participant";
 import CommonFinnishNames from "../data/CommonFinnishNames";
+import emailDomains from "../data/EmailDomains";
 
 // simulates backend and database stuff
 
@@ -8,6 +9,11 @@ const Utils = {
   lastId: 0,
   participants: [],
 
+  /**
+   * Generates n amount of Participant-objects with random data.
+   * @param {number} amount number of participants to generate
+   * @returns list of Participant objects.
+   */
   generateParticipants(amount) {
     if(!amount || amount < 1) {
       throw Error("amount is less than 1!");
@@ -47,8 +53,10 @@ const Utils = {
       .replace(new RegExp("å", 'g'), "a")
       .replace(new RegExp("ä", 'g'), "a")
       .replace(new RegExp("ö", 'g'), "o")
-      + "@mail.com";
-      return email;
+      + "@"
+      + emailDomains[Math.floor(Math.random() * emailDomains.length)];
+
+    return email;
   },
 
   generatePhone() {
