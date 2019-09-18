@@ -48,7 +48,7 @@ export default class Table extends React.Component {
       <tr key={rowKey} onClick={() => this.rowClicked(rowData)}>
         {
           this.props.columns.map((col) => {
-            let tableColumnData = new TableColumnData(col.headerText, rowData[col.dataColumn], col.type, col.showText);
+            let tableColumnData = new TableColumnData(col.headerText, rowData[col.dataColumn], col.type, col.showText, col.component);
 
             let colKey = rowData['id'] + "-" + col.headerText;
             return (
@@ -78,6 +78,7 @@ export default class Table extends React.Component {
   }
 
   buttonClicked(data) {
+    console.log(this.props.data);
     this.props.buttonClicked(data);
   }
 

@@ -1,7 +1,9 @@
 import React from 'react';
 
+import { Edit, Delete } from '@material-ui/icons';
+
 import Table from './common/table/Table';
-import { TableColumnDataType } from './common/table/TableColumnData';
+import { TableColumnData, TableColumnDataType } from './common/table/TableColumnData';
 import ParticipantService from '../services/ParticipantService';
 
 export default class ViewComponent extends React.Component {
@@ -16,15 +18,14 @@ export default class ViewComponent extends React.Component {
   componentDidMount() {
     this.setState({
       columns: [
-        { headerText: "name", dataColumn: "name", type: TableColumnDataType.EDITABLE_TEXT, showText: true },
-        { headerText: "email", dataColumn: "email", type: TableColumnDataType.EDITABLE_TEXT, showText: true },
-        { headerText: "phone", dataColumn: "phone", type: TableColumnDataType.EDITABLE_TEXT, showText: true },
-        { headerText: "edit", dataColumn: "", type: TableColumnDataType.BUTTON, showText: false },
-        { headerText: "delete", dataColumn: "", type: TableColumnDataType.BUTTON, showText: false }
+        new TableColumnData().fromObject({ headerText: "name", dataColumn: "name", type: TableColumnDataType.EDITABLE_TEXT, showText: true }),
+        new TableColumnData().fromObject({ headerText: "email", dataColumn: "email", type: TableColumnDataType.EDITABLE_TEXT, showText: true }),
+        new TableColumnData().fromObject({ headerText: "phone", dataColumn: "phone", type: TableColumnDataType.EDITABLE_TEXT, showText: true }),
+        new TableColumnData().fromObject({ headerText: "edit", dataColumn: "", type: TableColumnDataType.COMPONENT, showText: false, component: <Edit/> }),
+        new TableColumnData().fromObject({ headerText: "delete", dataColumn: "", type: TableColumnDataType.COMPONENT, showText: false, component: <Delete/>})
       ]
     });
     let participants = this.p_service.getParticipantList(this.amountOfParticipants);
-    console.log(participants);
     this.setState({data: participants})
   }
 

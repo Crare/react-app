@@ -18,17 +18,16 @@ export default class TableColumn extends React.Component {
 
   renderColumn() {
     const { data } = this.props;
-    if (data.showText) {
-      if (data.type === TableColumnDataType.HEAD) {
-        return data.headerText
-      } else if (data.type === TableColumnDataType.TEXT || data.type === TableColumnDataType.EDITABLE_TEXT) {
-        return data.dataColumn
-      } else if (data.type === TableColumnDataType.BUTTON) {
-        return <Button buttonClicked={(buttonData) => this.buttonClicked(buttonData)}>{data.headerText}</Button>
-      }
-    }
-    if (data.type === TableColumnDataType.BUTTON) {
+    if (data.type === TableColumnDataType.HEAD && data.showText) {
+      return data.headerText
+    } else if (data.type === TableColumnDataType.TEXT || data.type === TableColumnDataType.EDITABLE_TEXT) {
+      return data.dataColumn;
+    } else if (data.type === TableColumnDataType.BUTTON) {
       return <Button buttonClicked={(buttonData) => this.buttonClicked(buttonData)}>{data.headerText}</Button>
+    } else if (data.type === TableColumnDataType.BUTTON) {
+      return <Button data={data} buttonClicked={(buttonData) => this.buttonClicked(buttonData)}>{data.headerText}</Button>
+    } else if (data.type === TableColumnDataType.COMPONENT) {
+      return (<div>{data.component}</div>);
     }
     // return data.headerText;
   }

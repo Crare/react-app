@@ -6,17 +6,25 @@
  * @param type type of TableColumnDataType
  */
 class TableColumnData {
-  constructor(headerText = "", dataColumn = "", type = TableColumnDataType.TEXT, showText=true) {
+  constructor(headerText = "", dataColumn = "", type = TableColumnDataType.TEXT, showText = true, component = null) {
+    
     // type checks
-    if (typeof headerText != "string") { throw Error("headerText is not string") }
-    if (typeof dataColumn != "string") { throw Error("dataColumn is not string") }
-    if (!TableColumnDataType[type]) { throw Error("type is not TableColumnDataType") }
-    if (typeof showText != "boolean") { throw Error("showText is not boolean") }
+    if (typeof headerText != "string") { throw Error("headerText is not string: " + typeof headerText) }
+    if (typeof dataColumn != "string") { throw Error("dataColumn is not string: " + typeof dataColumn) }
+    if (!TableColumnDataType[type]) { throw Error("type is not TableColumnDataType: " + type) }
+    if (typeof showText != "boolean") { throw Error("showText is not boolean" + typeof showText) }
+    if (component != null && component.constructor.name !== "Object") { throw Error("component is not Object:" + component.constructor.name) }
+
 
     this.headerText = headerText; // string
     this.dataColumn = dataColumn; // string
     this.type = type; // TableColumnDataType
     this.showText = showText; // bool
+    this.component = component; // React.Component
+  }
+
+  fromObject = (object) => {
+    return new TableColumnData(object["headerText"], object["dataColumn"], object["type"], object["showText"], object["component"]);
   }
 }
 
@@ -27,7 +35,8 @@ const TableColumnDataType = {
   TEXT: "TEXT",
   BUTTON: "BUTTON",
   HEAD: "HEAD",
-  EDITABLE_TEXT: "EDITABLE_TEXT"
+  EDITABLE_TEXT: "EDITABLE_TEXT",
+  COMPONENT: "COMPONENT"
 }
 
 export { TableColumnDataType, TableColumnData };

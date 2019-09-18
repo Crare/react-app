@@ -7,6 +7,6 @@ export default class Button extends React.Component {
   }
 
   render() {
-    return <button onClick={(buttonData) => this.buttonClicked(buttonData)}>{this.props.children}</button>
+    return <button onClick={(buttonData) => this.buttonClicked({buttonClickEvent: buttonData, data: this.props.data})}>{this.props.children}</button>
   }
 }

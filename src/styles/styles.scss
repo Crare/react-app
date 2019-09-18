@@ -4,6 +4,10 @@
 @import "./colors.scss";
 @import "./fonts.scss";
 
+.MuiSvgIcon-root {
+  fill: $icon_color;
+}
+
 html,
 body {
   height: 100%;
