@@ -9,7 +9,7 @@ export default class TableColumn extends React.Component {
   columnHeadClicked(data) {
     this.props.columnHeadClicked(data);
   }
-  
+
   columnClicked(data) {
     this.props.columnClicked(data);
   }

@@ -7,7 +7,7 @@
  */
 class TableColumnData {
   constructor(headerText = "", dataColumn = "", type = TableColumnDataType.TEXT, showText = true, component = null) {
-    
+
     // type checks
     if (typeof headerText != "string") { throw Error("headerText is not string: " + typeof headerText) }
     if (typeof dataColumn != "string") { throw Error("dataColumn is not string: " + typeof dataColumn) }
