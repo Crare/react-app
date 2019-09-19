@@ -83,7 +83,9 @@ class Utils {
   }
 
   addNewParticipant(participant) {
-    this.participants.push(participant);
+    if (participant.id) { throw Error("Not a new participant!") }
+    participant.id = this.generateId();
+    this.participants.unshift(participant);
     return "success";
   }
 

@@ -31,7 +31,7 @@ class Validator {
       case InputValidationType.PHONE:
         return this.validatePhone(value);
       default:
-        return { error: "unhandled InputValidationType!" };
+        return { error: { key: ERROR.UNHANDLED_ERROR, text: "unhandled InputValidationType!" } };
     }
   }
 
@@ -39,22 +39,24 @@ class Validator {
     if (value.match(/^\w+\s\w+$/)) {
       return { success: true };
     }
-    console.log("validateName value.match()", value.match(/^\w+\s\w+$/));
-    return { error: "Invalid name, please give firstname and lastname." }
+    return { error: { key: ERROR.INVALID_NAME, text: "Invalid name, please give firstname and lastname separated with space." } }
   }
 
   validateEmail(value) {
-    if (value.match(/^[\w.]+@[\w.]+$/)) {
+    // simplified email regexp, 
+    // we could use example from https://emailregex.com/ too:
+    // /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    if (value.match(/^[\w.]+@\w+\.\w+$/)) {
       return { success: true };
     }
-    return { error: "Invalid email address." }
+    return { error: { key: ERROR.INVALID_EMAIL, text: "Invalid email address." } }
   }
 
   validatePhone(value) {
-    if (value.match(/^[\d ]+$/)) {
+    if (value.toString().split(' ').join('').match(/^\d{3,16}$/)) {
       return { success: true };
     }
-    return { error: "Invalid phone number. Only add numbers and spaces." }
+    return { error: { key: ERROR.INVALID_PHONE, text: "Invalid phone number. Only add numbers and spaces." } }
   }
 
 }
@@ -63,6 +65,13 @@ const InputValidationType = {
   NAME: "NAME",
   EMAIL: "EMAIL",
   PHONE: "PHONE"
+}
+
+const ERROR = {
+  UNHANDLED_ERROR: "UNHANDLED_ERROR",
+  INVALID_NAME: "INVALID_NAME",
+  INVALID_EMAIL: "INVALID_EMAIL",
+  INVALID_PHONE: "INVALID_PHONE",
 }
 
 

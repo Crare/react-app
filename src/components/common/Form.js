@@ -6,6 +6,7 @@ import Button from "./Button";
 // import { Validator } from "../../services/Validator";
 
 import "../../styles/styles.scss";
+import { Validator } from '../../services/Validator';
 
 /**
  * props: fields
@@ -18,6 +19,7 @@ export default class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = { errors: [] };
+    this.validator = new Validator();
 
     this.valueChanged = this.valueChanged.bind(this);
     this.buttonClicked = this.buttonClicked.bind(this);
@@ -30,7 +32,7 @@ export default class Form extends React.Component {
           <ul>
             {
               this.state.errors.map((err) => {
-                return <li>{err}</li>;
+                return <li key={err.key}>{err.text}</li>;
               })
             }
           </ul>
@@ -39,15 +41,12 @@ export default class Form extends React.Component {
     }
   }
 
-  buttonClicked(event) { // { buttonClickEvent, data }
-
-    // TODO: validation
-    // let errors = Validator.validateFields(this.props.fields);
-    // this.setState({ errors });
-    // if (errors.length === 0) {
-    // this.props.buttonClicked({ buttonClickEvent, data });
-    this.props.buttonClicked(event);
-    // }
+  buttonClicked(event) {
+    let errors = this.validator.validateFields(this.props.fields);
+    this.setState({ errors });
+    if (errors.length === 0) {
+      this.props.buttonClicked(event);
+    }
   }
 
   valueChanged(value) {

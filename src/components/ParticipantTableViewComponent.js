@@ -32,12 +32,9 @@ export default class ParticipantTableViewComponent extends React.Component {
   }
 
   componentDidMount() {
+    this.setEmptyInputFields();
+
     this.setState({
-      inputFields: [
-        { type: InputValidationType.NAME, name: "name", value: "", placeholder: "Full name" },
-        { type: InputValidationType.EMAIL, name: "email", value: "", placeholder: "E-mail address" },
-        { type: InputValidationType.PHONE, name: "phone", value: "", placeholder: "Phone number" },
-      ],
       columns: [
         new TableColumnData().fromObject({ headerText: "Name", dataColumn: "name", type: TableColumnDataType.EDITABLE_TEXT, showText: true }),
         new TableColumnData().fromObject({ headerText: "E-mail address", dataColumn: "email", type: TableColumnDataType.EDITABLE_TEXT, showText: true }),
@@ -51,6 +48,17 @@ export default class ParticipantTableViewComponent extends React.Component {
       this.setState({ participants });
     });
   }
+
+  setEmptyInputFields() {
+    this.setState({
+      inputFields: [
+        { type: InputValidationType.NAME, name: "name", value: "", placeholder: "Full name" },
+        { type: InputValidationType.EMAIL, name: "email", value: "", placeholder: "E-mail address" },
+        { type: InputValidationType.PHONE, name: "phone", value: "", placeholder: "Phone number" },
+      ]
+    });
+  }
+
 
   getParticipants() {
     this.p_service.getParticipantList((participants) => {
@@ -77,19 +85,7 @@ export default class ParticipantTableViewComponent extends React.Component {
   fieldsToParticipant() {
     let participant = new Participant();
     this.state.inputFields.forEach((field) => {
-      switch (field.name) {
-        case "name":
-          participant.name = field.name;
-          break;
-        case "email":
-          participant.email = field.email;
-          break;
-        case "phone":
-          participant.phone = field.phone;
-          break;
-        default:
-          break;
-      }
+      participant[field.name] = field.value;
     })
     return participant;
   }
@@ -99,6 +95,8 @@ export default class ParticipantTableViewComponent extends React.Component {
     this.p_service.addNewParticipant(newParticipant, (response) => {
       if (response === "success") {
         this.getParticipants();
+        this.setEmptyInputFields();
+        // TODO: fix updated fields to empty
       }
       console.log("added new participant!");
     });
