@@ -2,6 +2,10 @@ import React from 'react';
 
 import "../../styles/styles.scss";
 
+/**
+ * props: text
+ * @param text is render inside header title.
+ */
 export default class Header extends React.Component {
 
   render() {

@@ -9,14 +9,26 @@ import Form from "./common/Form";
 import { InputValidationType } from "../services/Validator";
 
 import "../styles/styles.scss";
+import Participant from '../dto/Participant';
 
+
+/**
+ * Renders form and table for handling participants
+ */
 export default class ParticipantTableViewComponent extends React.Component {
 
   amountOfParticipants = 20;
 
-  constructor() {
-    super();
-    this.p_service = ParticipantService;
+  constructor(props) {
+    super(props);
+    this.p_service = new ParticipantService();
+
+    this.rowClicked = this.rowClicked.bind(this);
+    this.columnClicked = this.columnClicked.bind(this);
+    this.buttonClicked = this.buttonClicked.bind(this);
+    this.valueChanged = this.valueChanged.bind(this);
+
+    this.formValueChanged = this.formValueChanged.bind(this);
   }
 
   componentDidMount() {
@@ -34,12 +46,20 @@ export default class ParticipantTableViewComponent extends React.Component {
         new TableColumnData().fromObject({ headerText: "delete", dataColumn: "", type: TableColumnDataType.COMPONENT, showText: false, component: <Delete /> })
       ]
     });
-    let participants = this.p_service.getParticipantList(this.amountOfParticipants);
-    this.setState({ data: participants })
+
+    this.p_service.generateParticipants(this.amountOfParticipants, (participants) => {
+      this.setState({ participants });
+    });
   }
 
-  columnHeadClicked(event) {
-    console.log("columnHeadClicked:", event);
+  getParticipants() {
+    this.p_service.getParticipantList((participants) => {
+      this.setState({ participants });
+    });
+  }
+
+  sortByColumn(event) {
+    console.log("sortByColumn:", event);
   }
 
   rowClicked(event) {
@@ -54,25 +74,81 @@ export default class ParticipantTableViewComponent extends React.Component {
     console.log("buttonClicked:", event);
   }
 
+  fieldsToParticipant() {
+    let participant = new Participant();
+    this.state.inputFields.forEach((field) => {
+      switch (field.name) {
+        case "name":
+          participant.name = field.name;
+          break;
+        case "email":
+          participant.email = field.email;
+          break;
+        case "phone":
+          participant.phone = field.phone;
+          break;
+        default:
+          break;
+      }
+    })
+    return participant;
+  }
+
+  addNewParticipant() {
+    let newParticipant = this.fieldsToParticipant();
+    this.p_service.addNewParticipant(newParticipant, (response) => {
+      if (response === "success") {
+        this.getParticipants();
+      }
+      console.log("added new participant!");
+    });
+  }
+
+  formValueChanged({ value, name }) {
+    let inputFields = this.state.inputFields;
+    inputFields.map((field) => {
+      if (field.name === name) {
+        field.value = value;
+      }
+      return field;
+    });
+    this.setState({ inputFields });
+  }
+
+  valueChanged(event) {
+    console.log("valueChanged:", event);
+  }
+
+  renderTable() {
+    if (this.state.participants) {
+      return (
+        <Table
+          columns={this.state.columns}
+          data={this.state.participants}
+          columnHeadClicked={(event) => this.sortByColumn(event)}
+          rowClicked={this.rowClicked}
+          columnClicked={this.columnClicked}
+          buttonClicked={this.buttonClicked} />);
+    }
+    return (<div>Generating participants...</div>);
+  }
+
   render() {
     if (this.state) {
       return (
         <div className="participants-table-view fixed-width-container">
           <h2 className="title">List of participants</h2>
-          <Form fields={this.state.inputFields} />
-          <Table
-            columns={this.state.columns}
-            data={this.state.data}
-            columnHeadClicked={(data) => this.columnHeadClicked(data)}
-            rowClicked={(data) => this.rowClicked(data)}
-            columnClicked={(data) => this.columnClicked(data)}
-            buttonClicked={(data) => this.buttonClicked(data)} />
+          <Form
+            fields={this.state.inputFields}
+            valueChanged={this.formValueChanged}
+            buttonClicked={() => this.addNewParticipant()} />
+          {this.renderTable()}
         </div>
       );
     }
     return (
       <div>
-        no state!
+        loading...
       </div>
     );
   }

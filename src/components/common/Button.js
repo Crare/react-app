@@ -4,17 +4,21 @@ import "../../styles/styles.scss";
 
 export default class Button extends React.Component {
 
-  buttonClicked(data) {
-    this.props.buttonClicked(data);
+  constructor(props) {
+    super(props);
+
+    this.buttonClicked = this.buttonClicked.bind(this);
+  }
+
+  buttonClicked(buttonClickEvent) {
+    this.props.buttonClicked({ buttonClickEvent, data: this.props.data });
   }
 
   render() {
-    const { styles, data, children } = this.props;
+    const { styles, children } = this.props;
     return (
       <button style={styles} className="button"
-        onClick={(buttonData) => this.buttonClicked(
-          { buttonClickEvent: buttonData, data }
-        )}>
+        onClick={this.buttonClicked}>
         {children}
       </button>
     );

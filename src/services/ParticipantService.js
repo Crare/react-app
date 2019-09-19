@@ -1,20 +1,46 @@
 import Utils from './Utils';
 
-const ParticipantService = {
+/**
+ * Service for handling participants with backend.
+ * @method getParticipantList
+ * @method generateParticipants
+ * @method addNewParticipant
+ * @method updateParticipant TODO:
+ */
+class ParticipantService {
 
+  constructor() {
+    this.utils = new Utils();
+  }
   /**
-   * Gets n amount of participants
-   * @param {number} amount 
-   * @returns list of Participant objects.
+   * Gets  participants
+   * @returns callback with list of Participant-objects.
    */
-  getParticipantList(amount) {
-    return Utils.generateParticipants(amount);
+  getParticipantList(callback) {
+    callback(this.utils.getParticipants());
   }
 
-  // getParticipant
-  // updateParticipant
-  //
-  
+  /**
+   * 
+   * Generates n amount of participants
+   * @param {number} amount 
+   * @returns callback with list of Participant-objects.
+   */
+  generateParticipants(amount, callback) {
+    callback(this.utils.generateParticipants(amount));
+  }
+
+  /**
+   * Adds new participant to the database
+   * @param {*} participant type of Participant class.
+   * @param {*} callback return "success" -string on succesfull entry.
+   */
+  addNewParticipant(participant, callback) {
+    callback(this.utils.addNewParticipant(participant));
+  }
+
+  // TODO: updateParticipant(participant, callback) {}
+
 }
 
 export default ParticipantService;

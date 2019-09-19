@@ -3,40 +3,55 @@ import React from 'react';
 import Input from "./Input";
 import Button from "./Button";
 
-import { Validator } from "../../services/Validator";
+// import { Validator } from "../../services/Validator";
 
 import "../../styles/styles.scss";
 
+/**
+ * props: fields
+ * events: valueChanged, buttonClicked
+ * 
+ * fields = [ {name, value, type, placeholder}, ...]
+ */
 export default class Form extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = { errors: [] };
+
+    this.valueChanged = this.valueChanged.bind(this);
+    this.buttonClicked = this.buttonClicked.bind(this);
   }
 
   renderErrors() {
-    if (this.state.errors) {
+    if (this.state.errors.length > 0) {
       return (
         <div className="errors">
-          {
-            this.state.errors.map((err) => {
-              return <div>{err}</div>;
-            })
-          }
+          <ul>
+            {
+              this.state.errors.map((err) => {
+                return <li>{err}</li>;
+              })
+            }
+          </ul>
         </div>
       );
     }
   }
 
-  buttonClicked({ buttonClickEvent, data }) {
-    console.log({ buttonClickEvent, data });
+  buttonClicked(event) { // { buttonClickEvent, data }
 
-    const errors = Validator.validateFields(this.props.fields);
-    this.setState({ errors });
-    if (errors.length === 0) {
-      this.props.buttonClicked({ buttonClickEvent, data });
-    }
+    // TODO: validation
+    // let errors = Validator.validateFields(this.props.fields);
+    // this.setState({ errors });
+    // if (errors.length === 0) {
+    // this.props.buttonClicked({ buttonClickEvent, data });
+    this.props.buttonClicked(event);
+    // }
+  }
 
+  valueChanged(value) {
+    this.props.valueChanged(value);
   }
 
   render() {
@@ -47,15 +62,17 @@ export default class Form extends React.Component {
           {
             this.props.fields.map((field) => {
               return (
-                <Input type={field.type}
+                <Input key={field.name}
+                  type={field.type}
                   name={field.name}
-                  value={field.value} />
+                  value={field.value}
+                  valueChanged={this.valueChanged} />
               );
             })
           }
           <Button
             styles={{ float: 'right' }}
-            buttonClicked={(data) => { this.buttonClicked(data) }} >
+            buttonClicked={this.buttonClicked} >
             Add new
           </Button>
         </div>

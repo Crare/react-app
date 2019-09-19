@@ -2,17 +2,22 @@ import React from 'react';
 
 import "../../styles/styles.scss";
 
+/**
+ * props: name, value, placeholder
+ * events: valueChanged
+ */
 export default class Input extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = { value: '' };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.valueChanged = this.valueChanged.bind(this);
   }
 
-  handleChange(event) {
+  valueChanged(event) {
     this.setState({ value: event.target.value });
+    this.props.valueChanged({ value: this.state.value, name: this.props.name });
   }
 
   render() {
@@ -24,7 +29,7 @@ export default class Input extends React.Component {
         name={name}
         value={this.state.value}
         placeholder={placeholder}
-        onChange={this.handleChange} />
+        onChange={this.valueChanged} />
     );
   }
 }

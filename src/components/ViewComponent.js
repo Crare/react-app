@@ -5,6 +5,9 @@ import ParticipantTableViewComponent from './ParticipantTableViewComponent';
 
 import "../styles/styles.scss";
 
+/**
+ * renders page content
+ */
 export default class ViewComponent extends React.Component {
 
   render() {
