@@ -1,7 +1,9 @@
 import React from 'react';
 
 import Header from './common/Header';
-import ParticipantTableViewComponent from './ParticipantTableViewComponent';
+// import ParticipantTableViewComponent from './ParticipantTableViewComponent';
+import ParticipantsView from './ParticipantsView';
+import ParticipantsForm from './ParticipantsForm';
 
 import "../styles/styles.scss";
 
@@ -15,7 +17,10 @@ export default class ViewComponent extends React.Component {
       <div className="view-container">
         <Header text={"Nord Software"} />
         <div className="page-content">
-          <ParticipantTableViewComponent />
+          <h2 className="title">List of participants</h2>
+          { /* <ParticipantTableViewComponent /> */}
+          <ParticipantsForm />
+          <ParticipantsView />
         </div>
       </div>
     );

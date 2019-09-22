@@ -26,6 +26,7 @@ export default class ParticipantTableViewComponent extends React.Component {
     this.rowClicked = this.rowClicked.bind(this);
     this.columnClicked = this.columnClicked.bind(this);
     this.buttonClicked = this.buttonClicked.bind(this);
+    this.columnValueChanged = this.columnValueChanged.bind(this);
 
     this.formValueChanged = this.formValueChanged.bind(this);
   }
@@ -35,9 +36,9 @@ export default class ParticipantTableViewComponent extends React.Component {
 
     this.setState({
       columns: [
-        new TableColumnData().fromObject({ headerText: "Name", dataColumn: "name", type: TableColumnDataType.EDITABLE_TEXT, showText: true, component: null, sortable: true }),
-        new TableColumnData().fromObject({ headerText: "E-mail address", dataColumn: "email", type: TableColumnDataType.EDITABLE_TEXT, showText: true, component: null, sortable: true }),
-        new TableColumnData().fromObject({ headerText: "Phone number", dataColumn: "phone", type: TableColumnDataType.EDITABLE_TEXT, showText: true, component: null, sortable: true }),
+        new TableColumnData().fromObject({ headerText: "Name", dataColumn: "name", type: TableColumnDataType.EDITABLE_TEXT, showText: true, sortable: true }),
+        new TableColumnData().fromObject({ headerText: "E-mail address", dataColumn: "email", type: TableColumnDataType.EDITABLE_TEXT, showText: true, sortable: true }),
+        new TableColumnData().fromObject({ headerText: "Phone number", dataColumn: "phone", type: TableColumnDataType.EDITABLE_TEXT, showText: true, sortable: true }),
         new TableColumnData().fromObject({ headerText: "edit", dataColumn: "id", type: TableColumnDataType.COMPONENT, showText: false, component: <Edit />, sortable: false }),
         new TableColumnData().fromObject({ headerText: "delete", dataColumn: "id", type: TableColumnDataType.COMPONENT, showText: false, component: <Delete />, sortable: false })
       ]
@@ -48,6 +49,8 @@ export default class ParticipantTableViewComponent extends React.Component {
     });
 
     this.setState({ sortByColumn: "name", sortAscending: false });
+    this.setState({ editRow: null });
+    this.setState({ editableRow: null });
   }
 
   setNewInputFields() {
@@ -90,12 +93,7 @@ export default class ParticipantTableViewComponent extends React.Component {
         return 0;
       }
       // toggle direction
-      console.log("sortByColumn", this.state.sortByColumn);
-      console.log("data.dataColumn", data.dataColumn);
-      console.log("sortAscending", this.state.sortAscending);
-
       if (this.state.sortByColumn === data.dataColumn) {
-        console.log("here!");
         this.setState({ sortAscending: !this.state.sortAscending });
       } else {
         this.setState({ sortAscending: false });
@@ -109,8 +107,8 @@ export default class ParticipantTableViewComponent extends React.Component {
     }
   }
 
-  rowClicked({ clickEvent, data }) {
-    // console.log("rowClicked:", { clickEvent, data });
+  rowClicked({ clickEvent, rowData, rowKey }) {
+    // console.log("rowClicked:", { clickEvent, rowData, rowKey });
   }
 
   columnClicked({ clickEvent, data }) {
@@ -120,6 +118,7 @@ export default class ParticipantTableViewComponent extends React.Component {
         this.deleteParticipant(data.dataColumn);
         break;
       case "edit": // TODO:
+        this.toggleEditParticipant(data.dataColumn);
         break;
       default:
         break;
@@ -136,6 +135,15 @@ export default class ParticipantTableViewComponent extends React.Component {
       participant[field.name] = field.value;
     })
     return participant;
+  }
+
+  toggleEditParticipant(participantId) {
+    console.log("toggleEditParticipant, participantId: ", participantId);
+    if (this.state.editableRow === participantId) {
+      this.setState({ editableRow: null });
+    } else {
+      this.setState({ editableRow: participantId });
+    }
   }
 
   deleteParticipant(participantId) {
@@ -169,6 +177,21 @@ export default class ParticipantTableViewComponent extends React.Component {
     this.setState({ inputFields });
   }
 
+  columnValueChanged({ value, name, data }) {
+    console.log("columnValueChanged", { value, name, data });
+    // this.state.participants.map((p) => {
+    //   p.
+    // });
+    // let inputFields = this.state.inputFields;
+    // inputFields.map((field) => {
+    //   if (field.name === name) {
+    //     field.value = value;
+    //   }
+    //   return field;
+    // });
+    // this.setState({ inputFields });
+  }
+
   renderTable() {
     if (this.state.participants) {
       return (
@@ -180,7 +203,9 @@ export default class ParticipantTableViewComponent extends React.Component {
           columnClicked={this.columnClicked}
           buttonClicked={this.buttonClicked}
           sortByColumn={this.state.sortByColumn}
-          sortAscending={this.state.sortAscending} />);
+          sortAscending={this.state.sortAscending}
+          editableRow={this.state.editableRow}
+          columnValueChanged={this.columnValueChanged} />);
     }
     return (<div>Loading participants...</div>);
   }

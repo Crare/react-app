@@ -12,3 +12,5 @@ x   Make each column sortable upon clicking on a column header
     Push your code to a public GitHub repository
     Deploy a live build on the internet
     FOLLOW THE DESIGN AS ACCURATELY AS YOU CAN (as for the logo, feel free to render a blank square)
+
+fix form styling

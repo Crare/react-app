@@ -1,6 +1,7 @@
 import React from 'react';
 import { TableColumnDataType } from './TableColumnData';
 import Button from '../Button';
+import Input from '../Input';
 
 import { ArrowDownward, ArrowUpward } from '@material-ui/icons';
 
@@ -25,6 +26,7 @@ export default class TableColumn extends React.Component {
     this.columnHeadClicked = this.columnHeadClicked.bind(this);
     this.columnClicked = this.columnClicked.bind(this);
     this.buttonClicked = this.buttonClicked.bind(this);
+    this.columnValueChanged = this.columnValueChanged.bind(this);
   }
 
   columnHeadClicked(clickEvent) {
@@ -44,15 +46,28 @@ export default class TableColumn extends React.Component {
     if (data.type === TableColumnDataType.HEAD && data.showText) {
       return (this.renderWithSorting(data.headerText));
 
-    } else if (data.type === TableColumnDataType.TEXT || data.type === TableColumnDataType.EDITABLE_TEXT) {
+    } else if (data.type === TableColumnDataType.TEXT) {
       return (<div>{data.dataColumn}</div>);
-
+    } else if (data.type === TableColumnDataType.EDITABLE_TEXT) {
+      if (this.props.editableRow) {
+        return (<Input
+          key={data.name}
+          name={data.name}
+          value={data.dataColumn}
+          valueChanged={this.columnValueChanged}
+        />);
+      }
+      return (<div>{data.dataColumn}</div>);
     } else if (data.type === TableColumnDataType.BUTTON) {
       return (<Button data={data} buttonClicked={this.buttonClicked}>{data.headerText}</Button>);
 
     } else if (data.type === TableColumnDataType.COMPONENT) {
       return (<div>{data.component}</div>);
     }
+  }
+
+  columnValueChanged({ value, name }) {
+    this.props.columnValueChanged({ value, name, data: this.props.data });
   }
 
   renderWithSorting(text) {

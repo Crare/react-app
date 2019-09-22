@@ -26,6 +26,7 @@ export default class Table extends React.Component {
     this.columnHeadClicked = this.columnHeadClicked.bind(this);
     this.columnClicked = this.columnClicked.bind(this);
     this.buttonClicked = this.buttonClicked.bind(this);
+    this.columnValueChanged = this.columnValueChanged.bind(this);
   }
 
   renderTableHead() {
@@ -66,7 +67,7 @@ export default class Table extends React.Component {
   renderTableRow(rowData) {
     let rowKey = rowData['id'];
     return (
-      <tr className="table-body-row" key={rowKey} onClick={this.rowClicked}>
+      <tr className="table-body-row" key={rowKey} onClick={(clickEvent) => this.rowClicked({ clickEvent, rowData, rowKey })}>
         {
           this.props.columns.map((col) => {
             let tableColumnData = new TableColumnData(col.headerText, rowData[col.dataColumn], col.type, col.showText, col.component);
@@ -77,13 +78,19 @@ export default class Table extends React.Component {
                 key={colKey}
                 data={tableColumnData}
                 columnClicked={this.columnClicked}
-                buttonClicked={this.buttonClicked}>
+                buttonClicked={this.buttonClicked}
+                editableRow={this.props.editableRow === rowKey}
+                columnValueChanged={this.columnValueChanged}>
               </TableColumn>
             );
           })
         }
       </tr>
     )
+  }
+
+  columnValueChanged({ value, name, data }) {
+    this.props.columnValueChanged({ value, name, data });
   }
 
   columnClicked({ clickEvent, data }) {
@@ -94,8 +101,8 @@ export default class Table extends React.Component {
     this.props.columnHeadClicked({ clickEvent, data });
   }
 
-  rowClicked({ clickEvent, data }) {
-    this.props.rowClicked({ clickEvent, data });
+  rowClicked({ clickEvent, rowData, rowKey }) {
+    this.props.rowClicked({ clickEvent, rowData, rowKey });
   }
 
   buttonClicked({ buttonClickEvent, data }) {

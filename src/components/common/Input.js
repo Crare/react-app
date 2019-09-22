@@ -10,7 +10,7 @@ export default class Input extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { value: '' };
+    this.state = { value: this.props.value };
 
     this.valueChanged = this.valueChanged.bind(this);
   }
