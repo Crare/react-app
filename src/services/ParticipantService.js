@@ -6,6 +6,7 @@ import Utils from './Utils';
  * @method generateParticipants
  * @method addNewParticipant
  * @method updateParticipant TODO:
+ * @method deleteParticipant TODO:
  */
 class ParticipantService {
 
@@ -40,6 +41,7 @@ class ParticipantService {
   }
 
   // TODO: updateParticipant(participant, callback) {}
+  // TODO: deleteParticipant(participant, callback) {}
 
 }
 

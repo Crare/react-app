@@ -32,7 +32,7 @@ export default class ParticipantTableViewComponent extends React.Component {
   }
 
   componentDidMount() {
-    this.setEmptyInputFields();
+    this.setNewInputFields();
 
     this.setState({
       columns: [
@@ -49,7 +49,7 @@ export default class ParticipantTableViewComponent extends React.Component {
     });
   }
 
-  setEmptyInputFields() {
+  setNewInputFields() {
     this.setState({
       inputFields: [
         { type: InputValidationType.NAME, name: "name", value: "", placeholder: "Full name" },
@@ -95,8 +95,7 @@ export default class ParticipantTableViewComponent extends React.Component {
     this.p_service.addNewParticipant(newParticipant, (response) => {
       if (response === "success") {
         this.getParticipants();
-        this.setEmptyInputFields();
-        // TODO: fix updated fields to empty
+        this.setNewInputFields();
       }
       console.log("added new participant!");
     });
