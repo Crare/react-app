@@ -26,7 +26,6 @@ export default class ParticipantTableViewComponent extends React.Component {
     this.rowClicked = this.rowClicked.bind(this);
     this.columnClicked = this.columnClicked.bind(this);
     this.buttonClicked = this.buttonClicked.bind(this);
-    this.valueChanged = this.valueChanged.bind(this);
 
     this.formValueChanged = this.formValueChanged.bind(this);
   }
@@ -67,7 +66,7 @@ export default class ParticipantTableViewComponent extends React.Component {
   }
 
   sortByColumn({ clickEvent, data }) {
-    // console.log("sortByColumn:", { clickEvent, data });
+    console.log("sortByColumn:", { clickEvent, data });
   }
 
   rowClicked({ clickEvent, data }) {
@@ -88,7 +87,7 @@ export default class ParticipantTableViewComponent extends React.Component {
   }
 
   buttonClicked({ buttonClickEvent, data }) {
-    console.log("buttonClicked:", { buttonClickEvent, data });
+    // console.log("buttonClicked:", { buttonClickEvent, data });
   }
 
   fieldsToParticipant() {
@@ -103,7 +102,6 @@ export default class ParticipantTableViewComponent extends React.Component {
     this.p_service.deleteParticipant(participantId, (response) => {
       if (response === "success") {
         this.getParticipants();
-        console.log("removed participant!");
       } else {
         console.error(response);
       }
@@ -117,7 +115,6 @@ export default class ParticipantTableViewComponent extends React.Component {
         this.getParticipants();
         this.setNewInputFields();
       }
-      console.log("added new participant!");
     });
   }
 
@@ -130,10 +127,6 @@ export default class ParticipantTableViewComponent extends React.Component {
       return field;
     });
     this.setState({ inputFields });
-  }
-
-  valueChanged(event) {
-    console.log("valueChanged:", event);
   }
 
   renderTable() {
