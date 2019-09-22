@@ -35,17 +35,19 @@ export default class ParticipantTableViewComponent extends React.Component {
 
     this.setState({
       columns: [
-        new TableColumnData().fromObject({ headerText: "Name", dataColumn: "name", type: TableColumnDataType.EDITABLE_TEXT, showText: true }),
-        new TableColumnData().fromObject({ headerText: "E-mail address", dataColumn: "email", type: TableColumnDataType.EDITABLE_TEXT, showText: true }),
-        new TableColumnData().fromObject({ headerText: "Phone number", dataColumn: "phone", type: TableColumnDataType.EDITABLE_TEXT, showText: true }),
-        new TableColumnData().fromObject({ headerText: "edit", dataColumn: "id", type: TableColumnDataType.COMPONENT, showText: false, component: <Edit /> }),
-        new TableColumnData().fromObject({ headerText: "delete", dataColumn: "id", type: TableColumnDataType.COMPONENT, showText: false, component: <Delete /> })
+        new TableColumnData().fromObject({ headerText: "Name", dataColumn: "name", type: TableColumnDataType.EDITABLE_TEXT, showText: true, component: null, sortable: true }),
+        new TableColumnData().fromObject({ headerText: "E-mail address", dataColumn: "email", type: TableColumnDataType.EDITABLE_TEXT, showText: true, component: null, sortable: true }),
+        new TableColumnData().fromObject({ headerText: "Phone number", dataColumn: "phone", type: TableColumnDataType.EDITABLE_TEXT, showText: true, component: null, sortable: true }),
+        new TableColumnData().fromObject({ headerText: "edit", dataColumn: "id", type: TableColumnDataType.COMPONENT, showText: false, component: <Edit />, sortable: false }),
+        new TableColumnData().fromObject({ headerText: "delete", dataColumn: "id", type: TableColumnDataType.COMPONENT, showText: false, component: <Delete />, sortable: false })
       ]
     });
 
     this.p_service.generateParticipants(this.amountOfParticipants, (participants) => {
       this.setState({ participants });
     });
+
+    this.setState({ sortByColumn: "name", sortAscending: false });
   }
 
   setNewInputFields() {
@@ -66,7 +68,45 @@ export default class ParticipantTableViewComponent extends React.Component {
   }
 
   sortByColumn({ clickEvent, data }) {
-    console.log("sortByColumn:", { clickEvent, data });
+    // console.log("sortByColumn:", { clickEvent, data });
+    if (data.sortable) {
+      let participants = this.state.participants;
+      const compare = (a, b, attr) => {
+        if (a[attr] < b[attr]) {
+          return 1;
+        }
+        if (a[attr] > b[attr]) {
+          return -1;
+        }
+        return 0;
+      }
+      const compareOpposite = (a, b, attr) => {
+        if (a[attr] < b[attr]) {
+          return -1;
+        }
+        if (a[attr] > b[attr]) {
+          return 1;
+        }
+        return 0;
+      }
+      // toggle direction
+      console.log("sortByColumn", this.state.sortByColumn);
+      console.log("data.dataColumn", data.dataColumn);
+      console.log("sortAscending", this.state.sortAscending);
+
+      if (this.state.sortByColumn === data.dataColumn) {
+        console.log("here!");
+        this.setState({ sortAscending: !this.state.sortAscending });
+      } else {
+        this.setState({ sortAscending: false });
+      }
+      if (this.state.sortAscending) {
+        participants.sort((a, b) => compareOpposite(a, b, data.dataColumn));
+      } else {
+        participants.sort((a, b) => compare(a, b, data.dataColumn));
+      }
+      this.setState({ participants, sortByColumn: data.dataColumn });
+    }
   }
 
   rowClicked({ clickEvent, data }) {
@@ -138,9 +178,11 @@ export default class ParticipantTableViewComponent extends React.Component {
           columnHeadClicked={(event) => this.sortByColumn(event)}
           rowClicked={this.rowClicked}
           columnClicked={this.columnClicked}
-          buttonClicked={this.buttonClicked} />);
+          buttonClicked={this.buttonClicked}
+          sortByColumn={this.state.sortByColumn}
+          sortAscending={this.state.sortAscending} />);
     }
-    return (<div>Generating participants...</div>);
+    return (<div>Loading participants...</div>);
   }
 
   render() {

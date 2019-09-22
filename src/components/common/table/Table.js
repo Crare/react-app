@@ -34,13 +34,16 @@ export default class Table extends React.Component {
         <tr className="table-head-row">
           {
             this.props.columns.map((col) => {
-              let tableColumnData = new TableColumnData(col.headerText, col.dataColumn, TableColumnDataType.HEAD, col.showText);
+              let tableColumnData = new TableColumnData(col.headerText, col.dataColumn, TableColumnDataType.HEAD, col.showText, col.component, col.sortable);
               return (
                 <TableColumn
                   key={col.headerText}
                   data={tableColumnData}
-                  columnHeadClicked={this.columnHeadClicked}>
-                </TableColumn>);
+                  columnHeadClicked={this.columnHeadClicked}
+                  sortByColumn={this.props.sortByColumn}
+                  sortAscending={this.props.sortAscending}>
+                </TableColumn>
+              );
             })
           }
         </tr>

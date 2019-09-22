@@ -39,7 +39,17 @@ class Utils {
       this.participants.push(participant);
     }
 
-    return this.participants;
+    const compare = (a, b, attr) => {
+      if (a[attr] < b[attr]) {
+        return -1;
+      }
+      if (a[attr] > b[attr]) {
+        return 1;
+      }
+      return 0;
+    }
+
+    return this.participants.sort((a, b) => compare(a, b, "name"));
   }
 
   generateId() {
@@ -82,9 +92,16 @@ class Utils {
     return phone;
   }
 
+  upperCaseName(name) {
+    name = name[0].toUpperCase() + name.substring(1, name.length); // firstname
+    name = name.substring(0, name.indexOf(" ") + 1) + name[name.indexOf(" ") + 1].toUpperCase() + name.substring(name.indexOf(" ") + 2, name.length); // lastname
+    return name;
+  }
+
   addNewParticipant(participant) {
     if (participant.id) { throw Error("Not a new participant!") }
     participant.id = this.generateId();
+    participant.name = this.upperCaseName(participant.name);
     this.participants.unshift(participant);
     return "success";
   }

@@ -2,6 +2,8 @@ import React from 'react';
 import { TableColumnDataType } from './TableColumnData';
 import Button from '../Button';
 
+import { ArrowDownward, ArrowUpward } from '@material-ui/icons';
+
 import "../../../styles/styles.scss";
 
 
@@ -40,17 +42,28 @@ export default class TableColumn extends React.Component {
   renderColumn() {
     const { data } = this.props;
     if (data.type === TableColumnDataType.HEAD && data.showText) {
-      return data.headerText
+      return (this.renderWithSorting(data.headerText));
 
     } else if (data.type === TableColumnDataType.TEXT || data.type === TableColumnDataType.EDITABLE_TEXT) {
-      return data.dataColumn;
+      return (<div>{data.dataColumn}</div>);
 
     } else if (data.type === TableColumnDataType.BUTTON) {
-      return <Button data={data} buttonClicked={this.buttonClicked}>{data.headerText}</Button>
+      return (<Button data={data} buttonClicked={this.buttonClicked}>{data.headerText}</Button>);
 
     } else if (data.type === TableColumnDataType.COMPONENT) {
       return (<div>{data.component}</div>);
     }
+  }
+
+  renderWithSorting(text) {
+    if (this.props.sortByColumn === this.props.data.dataColumn) {
+      if (this.props.sortAscending) {
+        return (<div className="column-head-sort">{text}<div><ArrowDownward /></div></div>);
+      } else {
+        return (<div className="column-head-sort">{text}<div><ArrowUpward /></div></div>);
+      }
+    }
+    return (<div>{text}</div>);
   }
 
   render() {

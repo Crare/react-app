@@ -6,7 +6,7 @@
  * @param type type of TableColumnDataType
  */
 class TableColumnData {
-  constructor(headerText = "", dataColumn = "", type = TableColumnDataType.TEXT, showText = true, component = null) {
+  constructor(headerText = "", dataColumn = "", type = TableColumnDataType.TEXT, showText = true, component = null, sortable = false) {
 
     // type checks
     if (typeof headerText != "string") { throw Error("headerText is not string: " + typeof headerText) }
@@ -21,10 +21,18 @@ class TableColumnData {
     this.type = type; // TableColumnDataType
     this.showText = showText; // bool
     this.component = component; // React.Component
+    this.sortable = sortable;
   }
 
   fromObject = (object) => {
-    return new TableColumnData(object["headerText"], object["dataColumn"], object["type"], object["showText"], object["component"]);
+    return new TableColumnData(
+      object["headerText"],
+      object["dataColumn"],
+      object["type"],
+      object["showText"],
+      object["component"],
+      object["sortable"]
+    );
   }
 }
 
