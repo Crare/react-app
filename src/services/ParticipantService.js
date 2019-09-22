@@ -40,8 +40,11 @@ class ParticipantService {
     callback(this.utils.addNewParticipant(participant));
   }
 
+  deleteParticipant(participantId, callback) {
+    callback(this.utils.deleteParticipant(participantId));
+  }
+
   // TODO: updateParticipant(participant, callback) {}
-  // TODO: deleteParticipant(participant, callback) {}
 
 }
 

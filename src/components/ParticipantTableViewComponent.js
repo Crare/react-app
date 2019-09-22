@@ -39,8 +39,8 @@ export default class ParticipantTableViewComponent extends React.Component {
         new TableColumnData().fromObject({ headerText: "Name", dataColumn: "name", type: TableColumnDataType.EDITABLE_TEXT, showText: true }),
         new TableColumnData().fromObject({ headerText: "E-mail address", dataColumn: "email", type: TableColumnDataType.EDITABLE_TEXT, showText: true }),
         new TableColumnData().fromObject({ headerText: "Phone number", dataColumn: "phone", type: TableColumnDataType.EDITABLE_TEXT, showText: true }),
-        new TableColumnData().fromObject({ headerText: "edit", dataColumn: "", type: TableColumnDataType.COMPONENT, showText: false, component: <Edit /> }),
-        new TableColumnData().fromObject({ headerText: "delete", dataColumn: "", type: TableColumnDataType.COMPONENT, showText: false, component: <Delete /> })
+        new TableColumnData().fromObject({ headerText: "edit", dataColumn: "id", type: TableColumnDataType.COMPONENT, showText: false, component: <Edit /> }),
+        new TableColumnData().fromObject({ headerText: "delete", dataColumn: "id", type: TableColumnDataType.COMPONENT, showText: false, component: <Delete /> })
       ]
     });
 
@@ -66,20 +66,29 @@ export default class ParticipantTableViewComponent extends React.Component {
     });
   }
 
-  sortByColumn(event) {
-    console.log("sortByColumn:", event);
+  sortByColumn({ clickEvent, data }) {
+    // console.log("sortByColumn:", { clickEvent, data });
   }
 
-  rowClicked(event) {
-    console.log("rowClicked:", event);
+  rowClicked({ clickEvent, data }) {
+    // console.log("rowClicked:", { clickEvent, data });
   }
 
-  columnClicked(event) {
-    console.log("columnClicked:", event);
+  columnClicked({ clickEvent, data }) {
+    // console.log("columnClicked:", { clickEvent, data });
+    switch (data.headerText) {
+      case "delete":
+        this.deleteParticipant(data.dataColumn);
+        break;
+      case "edit": // TODO:
+        break;
+      default:
+        break;
+    }
   }
 
-  buttonClicked(event) {
-    console.log("buttonClicked:", event);
+  buttonClicked({ buttonClickEvent, data }) {
+    console.log("buttonClicked:", { buttonClickEvent, data });
   }
 
   fieldsToParticipant() {
@@ -88,6 +97,17 @@ export default class ParticipantTableViewComponent extends React.Component {
       participant[field.name] = field.value;
     })
     return participant;
+  }
+
+  deleteParticipant(participantId) {
+    this.p_service.deleteParticipant(participantId, (response) => {
+      if (response === "success") {
+        this.getParticipants();
+        console.log("removed participant!");
+      } else {
+        console.error(response);
+      }
+    });
   }
 
   addNewParticipant() {

@@ -83,21 +83,20 @@ export default class Table extends React.Component {
     )
   }
 
-  columnClicked(data) {
-    this.props.columnClicked(data);
+  columnClicked({ clickEvent, data }) {
+    this.props.columnClicked({ clickEvent, data });
   }
 
-  columnHeadClicked(data) {
-    this.props.columnHeadClicked(data);
+  columnHeadClicked({ clickEvent, data }) {
+    this.props.columnHeadClicked({ clickEvent, data });
   }
 
-  rowClicked(data) {
-    this.props.rowClicked(data);
+  rowClicked({ clickEvent, data }) {
+    this.props.rowClicked({ clickEvent, data });
   }
 
-  buttonClicked(data) {
-    console.log(this.props.data);
-    this.props.buttonClicked(data);
+  buttonClicked({ buttonClickEvent, data }) {
+    this.props.buttonClicked({ buttonClickEvent, data });
   }
 
   render() {

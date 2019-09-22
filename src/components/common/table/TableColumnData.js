@@ -10,7 +10,7 @@ class TableColumnData {
 
     // type checks
     if (typeof headerText != "string") { throw Error("headerText is not string: " + typeof headerText) }
-    if (typeof dataColumn != "string") { throw Error("dataColumn is not string: " + typeof dataColumn) }
+    // dataColumn can be any
     if (!TableColumnDataType[type]) { throw Error("type is not TableColumnDataType: " + type) }
     if (typeof showText != "boolean") { throw Error("showText is not boolean" + typeof showText) }
     if (component != null && component.constructor.name !== "Object") { throw Error("component is not Object:" + component.constructor.name) }

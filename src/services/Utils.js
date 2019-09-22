@@ -89,6 +89,15 @@ class Utils {
     return "success";
   }
 
+  deleteParticipant(participantId) {
+    const index = this.participants.findIndex(p => p.id === participantId);
+    if (index !== -1) {
+      this.participants.splice(index, 1);
+      return "success";
+    }
+    return "no_such_id";
+  }
+
 }
 
 export default Utils;

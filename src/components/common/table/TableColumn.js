@@ -25,16 +25,16 @@ export default class TableColumn extends React.Component {
     this.buttonClicked = this.buttonClicked.bind(this);
   }
 
-  columnHeadClicked(data) {
-    this.props.columnHeadClicked(data);
+  columnHeadClicked(clickEvent) {
+    this.props.columnHeadClicked({ clickEvent, data: this.props.data });
   }
 
-  columnClicked(data) {
-    this.props.columnClicked(data);
+  columnClicked(clickEvent) {
+    this.props.columnClicked({ clickEvent, data: this.props.data });
   }
 
-  buttonClicked(data) {
-    this.props.buttonClicked(data);
+  buttonClicked(buttonClickEvent) {
+    this.props.buttonClicked({ buttonClickEvent, data: this.props.data });
   }
 
   renderColumn() {
