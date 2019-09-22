@@ -179,17 +179,11 @@ export default class ParticipantTableViewComponent extends React.Component {
 
   columnValueChanged({ value, name, data }) {
     console.log("columnValueChanged", { value, name, data });
-    // this.state.participants.map((p) => {
+    // let participants = this.state.participants;
+    // participants.map((p) => {
     //   p.
     // });
-    // let inputFields = this.state.inputFields;
-    // inputFields.map((field) => {
-    //   if (field.name === name) {
-    //     field.value = value;
-    //   }
-    //   return field;
-    // });
-    // this.setState({ inputFields });
+    // this.setState({ participants});
   }
 
   renderTable() {

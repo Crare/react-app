@@ -4,10 +4,10 @@ x = done
 x   Use Create React App to scaffold your application
 x   Generate 20 participants that contain randomized values for the following properties: id, name, email address, and phone number
 x   Render a table that displays the participants on individual rows
-x   Create a form for adding new participants to the table (remember to validate the form)
+    Create a form for adding new participants to the table (remember to validate the form)
     Make each participant editable by clicking on a table cell (inline editing)
-x   Add support for deleting rows
-x   Make each column sortable upon clicking on a column header
+    Add support for deleting rows
+    Make each column sortable upon clicking on a column header
     Write a developer-friendly installation guide on how to run the app
     Push your code to a public GitHub repository
     Deploy a live build on the internet

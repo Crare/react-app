@@ -6,13 +6,13 @@ export default class ParticipantsForm extends React.Component {
     return (
       <div className="participants-form">
         <div className="participants-form-property-1">
-          <input />
+          <input name="name" placeholder="Full name" />
         </div>
         <div className="participants-form-property-2">
-          <input />
+          <input name="email" placeholder="E-Mail address" />
         </div>
         <div className="participants-form-property-3">
-          <input />
+          <input name="phone" placeholder="Phone number" />
         </div>
         <div className="participants-form-property-4">
         </div>
