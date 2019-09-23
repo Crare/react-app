@@ -12,5 +12,3 @@ x   Render a table that displays the participants on individual rows
     Push your code to a public GitHub repository
     Deploy a live build on the internet
     FOLLOW THE DESIGN AS ACCURATELY AS YOU CAN (as for the logo, feel free to render a blank square)
-
-fix form styling

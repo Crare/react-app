@@ -88,7 +88,7 @@ export default class ParticipantList extends React.Component {
                 <div className="list-item-property flex-width-2">{p.name}</div>
                 <div className="list-item-property flex-width-3">{p.email}</div>
                 <div className="list-item-property flex-width-2">{p.phone}</div>
-                <div className="list-item-property flex-width-2 right" >
+                <div className="list-item-property flex-width-2 right no-padding" >
                   <Edit className="edit" onClick={() => this.editRow(p.id)} />
                   <Delete className="delete" onClick={() => this.deleteParticipant(p.id)} />
                 </div>
