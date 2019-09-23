@@ -1,4 +1,5 @@
 import Utils from './Utils';
+import { Validator, InputValidationType } from './Validator';
 
 /**
  * Service for handling participants with backend.
@@ -12,6 +13,7 @@ class ParticipantService {
 
   constructor() {
     this.utils = new Utils();
+    this.validator = new Validator();
   }
   /**
    * Gets  participants
@@ -33,13 +35,23 @@ class ParticipantService {
 
   /**
    * Adds new participant to the database
+   * Validates before saving
    * @param {*} participant type of Participant class.
-   * @param {*} callback return "success" -string on succesfull entry.
+   * @param {*} callback return "success" -string on successful entry.
+   * @param {*} validationError returns array of validation errors.
    */
-  addNewParticipant(participant, callback) {
-    console.log(participant);
-    // TODO: do validation here
-    callback(this.utils.addNewParticipant(participant));
+  addNewParticipant(participant, callback, validationError) {
+    const fields = [
+      { value: participant.name, type: InputValidationType.NAME },
+      { value: participant.email, type: InputValidationType.EMAIL },
+      { value: participant.phone, type: InputValidationType.PHONE }
+    ];
+    const errors = this.validator.validateFields(fields);
+    if (errors.length > 0) {
+      validationError(errors);
+    } else {
+      callback(this.utils.addNewParticipant(participant));
+    }
   }
 
   deleteParticipant(participantId, callback) {

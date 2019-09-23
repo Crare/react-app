@@ -20,7 +20,6 @@ class ParticipantsForm extends React.Component {
 
   addNewParticipant(event) {
     event.preventDefault();
-    console.log(this.state);
     this.props.addNewParticipant(this.state);
   }
 
@@ -58,9 +57,11 @@ class ParticipantsForm extends React.Component {
 
 
 const mapStateToProps = state => {
-  console.log("mapStateToProps, state:", state);
+  // console.log("mapStateToProps, state:", state);
   if (state.participantReducer.form) {
     return state.participantReducer.form;
+  } else if (state.participantReducer.error) {
+    return { error: state.participantReducer.form };
   }
   //   const { participants } = state.participantReducer;
   //   participants.map(

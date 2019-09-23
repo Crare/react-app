@@ -5,12 +5,21 @@
  * 
  * @method validateFields
  * @method validate
+ * 
  * @method validateName
  * @method validateEmail
  * @method validatePhone
+ * 
  */
 class Validator {
 
+  /**
+   * Validates array of fields/form as array
+   * type is type of InputValidationType
+   * @param {*} fields [ {value: "foo", type: "bar" }, ...]
+   * 
+   * @returns errors array: [{key: ..., text: 'lorem ipsum'}, ...]
+   */
   validateFields(fields) {
     let errors = [];
     fields.forEach(field => {
@@ -22,6 +31,11 @@ class Validator {
     return errors;
   }
 
+  /**
+   * validates one value of type x.
+   * @param {*} value value to check to match validation
+   * @param {*} type type of InputValidationType
+   */
   validate(value, type) {
     switch (type) {
       case InputValidationType.NAME:
