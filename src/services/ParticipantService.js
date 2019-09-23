@@ -37,6 +37,8 @@ class ParticipantService {
    * @param {*} callback return "success" -string on succesfull entry.
    */
   addNewParticipant(participant, callback) {
+    console.log(participant);
+    // TODO: do validation here
     callback(this.utils.addNewParticipant(participant));
   }
 

@@ -99,6 +99,7 @@ class Utils {
   }
 
   addNewParticipant(participant) {
+    console.log(participant);
     if (participant.id) { throw Error("Not a new participant!") }
     participant.id = this.generateId();
     participant.name = this.upperCaseName(participant.name);
