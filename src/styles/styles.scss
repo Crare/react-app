@@ -182,34 +182,46 @@ body {
   padding: 16px;
   background-color: $white;
   margin-bottom: 20px;
-  .participants-form-property-1 {
-    flex: 2;
+  .form-item {
     padding-right: 24px;
-  }
-  .participants-form-property-2 {
-    flex: 3;
-    padding-right: 24px;
-  }
-  .participants-form-property-3 {
-    flex: 2;
-    padding-right: 24px;
-  }
-  .participants-form-property-4 {
-    flex: 1;
-    padding-right: 24px;
-  }
-  .participants-form-property-5 {
-    flex: 1;
+    position: relative;
+    button {
+      padding-left: 25px;
+      padding-right: 25px;
+      position: absolute;
+      left: -30px;
+      height: 100%;
+    }
   }
 }
 
 input {
-  height: 40px;
+  height: 36px;
   border: 1px solid #eee;
   background-color: #f9f9f9;
   margin-right: 16px;
   width: 100%;
   text-indent: 10px;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 400;
+  // color: #909090;
+}
+
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #909090;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #909090;
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #909090;
 }
 
 button {
@@ -236,26 +248,17 @@ button {
       display: flex;
       flex-direction: row;
       // height: 48px;
-      padding: 24px;
-      color: #757575;
-      font-size: 14px;
-      line-height: 6px;
-      font-weight: 500;
+      padding-left: 24px;
+      padding-right: 24px;
+      padding-top: 15px;
+      padding-bottom: 16px;
       border-bottom: 1px solid #eee;
-      .list-header-item-1 {
-        flex: 2;
-      }
-      .list-header-item-2 {
-        flex: 3;
-      }
-      .list-header-item-3 {
-        flex: 2;
-      }
-      .list-header-item-4 {
-        flex: 1;
-      }
-      .list-header-item-5 {
-        flex: 1;
+      .list-header-item {
+        padding-right: 24px;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 16px;
+        color: #757575;
       }
     }
     .list-items {
@@ -264,29 +267,61 @@ button {
       .list-item {
         display: flex;
         flex-direction: row;
-        height: 24px;
+        height: 23px;
         padding: 24px;
-        color: 505050;
+        color: #505050;
         font-size: 16px;
         line-height: 24px;
         font-weight: 400;
         border-bottom: 1px solid #eee;
-        .list-item-property-1 {
-          flex: 2;
-        }
-        .list-item-property-2 {
-          flex: 3;
-        }
-        .list-item-property-3 {
-          flex: 2;
-        }
-        .list-item-property-4 {
-          flex: 1;
-        }
-        .list-item-property-5 {
-          flex: 1;
+        .list-item-property {
+          padding-right: 24px;
         }
       }
     }
   }
+}
+
+.flex-width-1 {
+  flex: 1;
+}
+
+.flex-width-2 {
+  flex: 2;
+}
+
+.flex-width-3 {
+  flex: 3;
+}
+
+.no-padding {
+  padding: 0px !important;
+}
+
+.MuiSvgIcon-root {
+  padding-left: 20px;
+  width: 24px;
+  height: 24px;
+  color: #909090;
+}
+.edit:hover {
+  color: #80b7ff;
+  transition: 0.5s color;
+  cursor: pointer;
+}
+.delete:hover {
+  color: #ff5959;
+  transition: 0.5s color;
+  cursor: pointer;
+}
+
+.right {
+  text-align: right;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: #757575;
+  color: #ededed;
+  transition: 0.5s;
 }
