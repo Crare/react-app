@@ -8,6 +8,15 @@ export default class ParticipantList extends React.Component {
   sortBy = "";
   sortAscending = false;
 
+  componentDidMount() {
+    console.log("ParticipantList componentDidMount props:", this.props);
+  }
+
+  componentDidUpdate() {
+    console.log("ParticipantList componentDidUpdate:", this.props);
+    this.render();
+  }
+
   renderHeader() {
     return (
       <div className="list-header">
@@ -79,6 +88,7 @@ export default class ParticipantList extends React.Component {
   }
 
   renderItems() {
+    console.log("renderItems called");
     return (
       <div className="list-items">
         {

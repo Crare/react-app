@@ -5,29 +5,27 @@ import Participant from '../dto/Participant';
 
 const participantService = new ParticipantService();
 
-export const generateParticipants = (amount) => {
-
+export const fetchParticipants = () => {
   return (dispatch) => {
-    dispatch({ type: ActionTypes.PARTICIPANTS_GENERATING });
+    dispatch({ type: ActionTypes.PARTICIPANTS_FETCHING });
 
-    participantService.generateParticipants(amount, (participants) => {
-      dispatch({ type: ActionTypes.PARTICIPANTS_GENERATE_SUCCESS, payload: participants });
+    participantService.fetchParticipants((participants) => {
+      dispatch({ type: ActionTypes.PARTICIPANTS_FETCH_SUCCESS, payload: participants });
     });
   };
 };
 
-export const addNewParticipant = ({ name, email, phone }) => {
 
+export const addNewParticipant = ({ name, email, phone }) => {
   return (dispatch) => {
     dispatch({ type: ActionTypes.PARTICIPANT_SAVING });
     participantService.addNewParticipant(new Participant(null, name, email, phone), (response) => {
-      if (response === "success") {
-        dispatch({ type: ActionTypes.PARTICIPANT_SAVE_SUCCESS });
+      if (!response.error && response.participants) {
+        dispatch({ type: ActionTypes.PARTICIPANT_SAVE_SUCCESS, payload: response.participants });
       } else {
-        dispatch({ type: ActionTypes.PARTICIPANT_SAVE_FAIL, payload: response });
+        dispatch({ type: ActionTypes.PARTICIPANT_SAVE_FAIL, payload: response.error });
       }
     }, (errors) => {
-
       console.log("validation errors: ", errors);
       dispatch({ type: ActionTypes.PARTICIPANT_SAVE_VALIDATION_ERROR, payload: errors });
     });

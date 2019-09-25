@@ -16,21 +16,11 @@ class ParticipantService {
     this.validator = new Validator();
   }
   /**
-   * Gets  participants
+   * Fetches participants
    * @returns callback with list of Participant-objects.
    */
-  getParticipantList(callback) {
+  fetchParticipants(callback) {
     callback(this.utils.getParticipants());
-  }
-
-  /**
-   * 
-   * Generates n amount of participants
-   * @param {number} amount 
-   * @returns callback with list of Participant-objects.
-   */
-  generateParticipants(amount, callback) {
-    callback(this.utils.generateParticipants(amount));
   }
 
   /**

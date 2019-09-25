@@ -15,6 +15,9 @@ class Utils {
   }
 
   getParticipants() {
+    if (this.participants.length === 0) {
+      this.generateParticipants(20);
+    }
     return this.participants;
   }
 
@@ -49,7 +52,7 @@ class Utils {
       return 0;
     }
 
-    return this.participants.sort((a, b) => compare(a, b, "name"));
+    this.participants = this.participants.sort((a, b) => compare(a, b, "name"));
   }
 
   generateId() {
@@ -99,21 +102,21 @@ class Utils {
   }
 
   addNewParticipant(participant) {
-    console.log(participant);
+    // console.log(participant);
     if (participant.id) { throw Error("Not a new participant!") }
     participant.id = this.generateId();
     participant.name = this.upperCaseName(participant.name);
     this.participants.unshift(participant);
-    return "success";
+    return { participants: this.participants };
   }
 
   deleteParticipant(participantId) {
     const index = this.participants.findIndex(p => p.id === participantId);
     if (index !== -1) {
       this.participants.splice(index, 1);
-      return "success";
+      return { participants: this.participants };
     }
-    return "no_such_id";
+    return { error: "no_such_id" };
   }
 
 }

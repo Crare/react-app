@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { addNewParticipant } from '../actions';
 
-class ParticipantsForm extends React.Component {
+class ParticipantForm extends React.Component {
 
   constructor(props) {
     super(props);
@@ -16,6 +16,10 @@ class ParticipantsForm extends React.Component {
 
     this.addNewParticipant = this.addNewParticipant.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+  }
+
+  componentDidUpdate(stuff) {
+    // console.log("ParticipantForm componentDidUpdate, stuff:", stuff);
   }
 
   addNewParticipant(event) {
@@ -34,16 +38,18 @@ class ParticipantsForm extends React.Component {
   }
 
   render() {
+    const { name, email, phone } = this.state;
+
     return (
       <form onSubmit={this.addNewParticipant} className="participants-form">
         <div className="form-item flex-width-2">
-          <input value={this.state.name} name="name" placeholder="Full name" onChange={this.handleInputChange} />
+          <input value={name} name="name" placeholder="Full name" onChange={this.handleInputChange} />
         </div>
         <div className="form-item flex-width-3">
-          <input value={this.state.email} name="email" placeholder="E-mail address" onChange={this.handleInputChange} />
+          <input value={email} name="email" placeholder="E-mail address" onChange={this.handleInputChange} />
         </div>
         <div className="form-item flex-width-2">
-          <input value={this.state.phone} name="phone" placeholder="Phone number" onChange={this.handleInputChange} />
+          <input value={phone} name="phone" placeholder="Phone number" onChange={this.handleInputChange} />
         </div>
         <div className="form-item flex-width-1">
         </div>
@@ -56,20 +62,12 @@ class ParticipantsForm extends React.Component {
 }
 
 
-const mapStateToProps = state => {
-  // console.log("mapStateToProps, state:", state);
-  if (state.participantReducer.form) {
-    return state.participantReducer.form;
-  } else if (state.participantReducer.error) {
-    return { error: state.participantReducer.form };
-  }
-  //   const { participants } = state.participantReducer;
-  //   participants.map(
-  //     index => ({ ...state.participantReducer[index], index })
-  //   );
-  //   return { participants };
-  // }
-  return {};
-};
+// const mapStateToProps = state => {
+//   console.log("FORM mapStateToProps, state:", state);
+//   if (state.participantReducer.form) {
+//     const { name, email, phone } = state.participantReducer.form;
+//   }
+//   return {};
+// };
 
-export default connect(mapStateToProps, { addNewParticipant })(ParticipantsForm);
+export default connect(null, { addNewParticipant })(ParticipantForm);
