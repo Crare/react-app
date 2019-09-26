@@ -1,5 +1,4 @@
 import { ActionTypes } from '../actions/types';
-import { fetchParticipants } from "../actions";
 
 const INITIAL_STATE = {
   participants: [],

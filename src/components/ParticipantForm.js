@@ -14,7 +14,7 @@ class ParticipantForm extends React.Component {
       phone: ''
     }
 
-    this.addNewParticipant = this.addNewParticipant.bind(this);
+    this.addParticipant = this.addParticipant.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
@@ -22,7 +22,7 @@ class ParticipantForm extends React.Component {
     // console.log("ParticipantForm componentDidUpdate, stuff:", stuff);
   }
 
-  addNewParticipant(event) {
+  addParticipant(event) {
     event.preventDefault();
     this.props.addNewParticipant(this.state);
   }
@@ -41,7 +41,7 @@ class ParticipantForm extends React.Component {
     const { name, email, phone } = this.state;
 
     return (
-      <form onSubmit={this.addNewParticipant} className="participants-form">
+      <form onSubmit={this.addParticipant} className="participants-form">
         <div className="form-item flex-width-2">
           <input value={name} name="name" placeholder="Full name" onChange={this.handleInputChange} />
         </div>
@@ -54,7 +54,7 @@ class ParticipantForm extends React.Component {
         <div className="form-item flex-width-1">
         </div>
         <div className="form-item flex-width-1 no-padding">
-          <button onClick={this.addNewParticipant}>Add new</button>
+          <button onClick={this.addParticipant}>Add new</button>
         </div>
       </form>
     );
