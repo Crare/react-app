@@ -15,6 +15,7 @@ export const participantFormUpdate = ({ prop, value }) => {
 
 export const fetchParticipants = ({ filter }) => {
   return (dispatch) => {
+    console.log("fetchParticipants");
     dispatch({ type: ActionTypes.PARTICIPANTS_FETCHING });
 
     participantService.fetchParticipants(filter, (participants) => {
@@ -48,6 +49,22 @@ export const deleteParticipant = ({ participantId }) => {
       } else if (response.error) {
         dispatch({ type: ActionTypes.PARTICIPANT_DELETE_FAIL, payload: response.error });
       }
+    });
+  }
+}
+
+export const updateParticipant = ({ participant }) => {
+  return (dispatch) => {
+    console.log(participant);
+    dispatch({ type: ActionTypes.PARTICIPANT_UPDATE_SAVING });
+    participantService.updateParticipant(participant, (response) => {
+      if (response.participants) {
+        dispatch({ type: ActionTypes.PARTICIPANT_UPDATE_SUCCESS, payload: response.participants });
+      } else if (response.error) {
+        dispatch({ type: ActionTypes.PARTICIPANT_UPDATE_FAIL, payload: response.error });
+      }
+    }, (errors) => {
+      dispatch({ type: ActionTypes.PARTICIPANT_UPDATE_VALIDATION_ERROR, payload: errors });
     });
   }
 }

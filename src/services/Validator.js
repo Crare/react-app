@@ -1,5 +1,7 @@
 /**
  * Handles validations.
+ * 
+ * Could be replaced probably with some node module.
  *
  * @class Validator
  * 
@@ -50,7 +52,10 @@ class Validator {
   }
 
   validateName(value) {
-    if (value.match(/^\w+\s\w+$/)) {
+    // simplyfied version.
+    // should really use better matcher for unicode characters from other languages.
+    // do we want to have space in between? do we want to allow multiple words than 2?
+    if (value.match(/^[A-ö]+\s[A-ö]+$/)) {
       return { success: true };
     }
     return { error: { key: ERROR.INVALID_NAME, text: "Invalid name, please give firstname and lastname separated with space." } }
@@ -60,13 +65,15 @@ class Validator {
     // simplified email regexp, 
     // we could use example from https://emailregex.com/ too:
     // /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    if (value.match(/^[\w.]+@\w+\.\w+$/)) {
+    if (value.match(/^\w+\.*\w*@\w+\.\w+\.?\w+$/)) {
       return { success: true };
     }
     return { error: { key: ERROR.INVALID_EMAIL, text: "Invalid email address." } }
   }
 
   validatePhone(value) {
+    // validates to contain only numbers
+    // removes spaces when checking for only numbers
     if (value.toString().split(' ').join('').match(/^\d{3,16}$/)) {
       return { success: true };
     }

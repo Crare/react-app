@@ -12,3 +12,7 @@ x   Make each column sortable upon clicking on a column header
 x   Push your code to a public GitHub repository
     Deploy a live build on the internet
     FOLLOW THE DESIGN AS ACCURATELY AS YOU CAN (as for the logo, feel free to render a blank square)
+
+other:
+cancel not working correctly: resetting value.
+save not changing participant.edit value.

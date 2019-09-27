@@ -1,6 +1,6 @@
 import Participant from "../dto/Participant";
-import CommonFinnishNames from "../data/CommonFinnishNames";
-import emailDomains from "../data/EmailDomains";
+import CommonFinnishNames from "../resources/CommonFinnishNames";
+import emailDomains from "../resources/EmailDomains";
 
 /**
  * simulates backend and database stuff
@@ -12,6 +12,7 @@ class Utils {
   constructor() {
     this.lastId = 0;
     this.participants = [];
+    this.storedFilter = null;
   }
 
   getParticipants(filter) {
@@ -22,6 +23,11 @@ class Utils {
     if (filter) {
       this.filterParticipants(filter);
     }
+
+    this.participants.map((p) => {
+      p.edit = false;
+      return p;
+    })
 
     return this.participants;
   }
@@ -54,6 +60,7 @@ class Utils {
       } else {
         this.participants.sort((a, b) => compareOpposite(a, b, filter.sortByColumn));
       }
+      this.storedFilter = filter;
     }
   }
 
@@ -127,11 +134,13 @@ class Utils {
   }
 
   addNewParticipant(participant) {
-    // console.log(participant);
     if (participant.id) { throw Error("Not a new participant!") }
     participant.id = this.generateId();
     participant.name = this.upperCaseName(participant.name);
-    this.participants.unshift(participant);
+    this.participants.push(participant);
+    if (this.storedFilter) {
+      this.filterParticipants(this.storedFilter);
+    }
     return { participants: this.participants };
   }
 
@@ -142,6 +151,17 @@ class Utils {
       return { participants: this.participants };
     }
     return { error: "no_such_id" };
+  }
+
+  updateParticipant(participant) {
+    this.participants.map((p) => {
+      if (p.id === participant.id) {
+        return participant;
+      }
+      p.edit = false;
+      return p;
+    });
+    return this.participants;
   }
 
 }

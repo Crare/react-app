@@ -23,14 +23,7 @@ class ParticipantService {
     callback(this.utils.getParticipants(filter));
   }
 
-  /**
-   * Adds new participant to the database
-   * Validates before saving
-   * @param {*} participant type of Participant class.
-   * @param {*} callback return "success" -string on successful entry.
-   * @param {*} validationError returns array of validation errors.
-   */
-  addNewParticipant(participant, callback, validationError) {
+  getFormFields(participant) {
     participant.name = participant.name.trim();
     participant.email = participant.email.trim();
     participant.phone = participant.phone.trim();
@@ -39,6 +32,18 @@ class ParticipantService {
       { value: participant.email, type: InputValidationType.EMAIL },
       { value: participant.phone, type: InputValidationType.PHONE }
     ];
+    return fields;
+  }
+
+  /**
+   * Adds new participant to the database
+   * Validates before saving
+   * @param {*} participant type of Participant class.
+   * @param {*} callback return "success" -string on successful entry.
+   * @param {*} validationError returns array of validation errors.
+   */
+  addNewParticipant(participant, callback, validationError) {
+    const fields = this.getFormFields(participant);
     const errors = this.validator.validateFields(fields);
     if (errors.length > 0) {
       validationError(errors);
@@ -51,7 +56,16 @@ class ParticipantService {
     callback(this.utils.deleteParticipant(participantId));
   }
 
-  // TODO: updateParticipant(participant, callback) {}
+  updateParticipant(participant, callback, validationError) {
+    console.log(participant);
+    const fields = this.getFormFields(participant);
+    const errors = this.validator.validateFields(fields);
+    if (errors.length > 0) {
+      validationError(errors);
+    } else {
+      callback(this.utils.updateParticipant(participant));
+    }
+  }
 
 }
 

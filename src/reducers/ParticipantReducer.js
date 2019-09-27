@@ -8,7 +8,7 @@ const INITIAL_STATE = {
 };
 
 export default (state = INITIAL_STATE, action) => {
-  // console.log("action.type:", action.type, "\naction.payload:", action.payload);
+  console.log("action.type:", action.type, "\naction.payload:", action.payload);
   switch (action.type) {
 
     case ActionTypes.PARTICIPANTS_FETCH_SUCCESS:
@@ -22,12 +22,14 @@ export default (state = INITIAL_STATE, action) => {
     case ActionTypes.PARTICIPANT_SAVING:
     case ActionTypes.PARTICIPANTS_FETCHING:
     case ActionTypes.PARTICIPANT_DELETING:
+    case ActionTypes.PARTICIPANT_UPDATE_SAVING:
       return { ...state, loading: true, errors: [] };
 
     case ActionTypes.PARTICIPANT_SAVE_FAIL:
       return { ...state, loading: false, form: INITIAL_STATE.form, errors: action.payload };
 
     case ActionTypes.PARTICIPANT_SAVE_VALIDATION_ERROR:
+    case ActionTypes.PARTICIPANT_UPDATE_VALIDATION_ERROR:
       return { ...state, loading: false, errors: action.payload };
 
     case ActionTypes.PARTICIPANT_FORM_UPDATE:
@@ -35,9 +37,11 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, form: { ...state.form, [action.payload.prop]: action.payload.value } };
 
     case ActionTypes.PARTICIPANT_DELETE_FAIL:
+    case ActionTypes.PARTICIPANT_UPDATE_FAIL:
       return { ...state, loading: false, errors: [action.payload] };
 
     default:
+      console.log("unhandled action.type: ", action.type);
       return state;
   }
 };

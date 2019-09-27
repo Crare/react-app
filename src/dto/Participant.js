@@ -4,6 +4,7 @@ export default class Participant {
   name = "";
   email = "";
   phone = "";
+  edit = false;
 
   constructor(id, name, email, phone) {
     this.id = id;
