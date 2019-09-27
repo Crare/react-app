@@ -8,7 +8,7 @@ const INITIAL_STATE = {
 };
 
 export default (state = INITIAL_STATE, action) => {
-  console.log("action.type: ", action.type);
+  // console.log("action: ", action);
   switch (action.type) {
 
     case ActionTypes.PARTICIPANTS_FETCH_SUCCESS:
@@ -26,6 +26,10 @@ export default (state = INITIAL_STATE, action) => {
 
     case ActionTypes.PARTICIPANT_SAVE_VALIDATION_ERROR:
       return { ...state, loading: false, errors: action.payload };
+
+    case ActionTypes.PARTICIPANT_FORM_UPDATE:
+      // action.payload === { prop: 'name', value: 'jane' } 
+      return { ...state, form: { ...state.form, [action.payload.prop]: action.payload.value } };
 
     default:
       return state;

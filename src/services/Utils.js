@@ -42,17 +42,6 @@ class Utils {
       this.participants.push(participant);
     }
 
-    const compare = (a, b, attr) => {
-      if (a[attr] < b[attr]) {
-        return -1;
-      }
-      if (a[attr] > b[attr]) {
-        return 1;
-      }
-      return 0;
-    }
-
-    this.participants = this.participants.sort((a, b) => compare(a, b, "name"));
   }
 
   generateId() {

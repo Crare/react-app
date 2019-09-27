@@ -1,20 +1,18 @@
 import React from 'react';
 
+import { connect } from 'react-redux';
 
 import { Edit, Delete, ArrowDownward, ArrowUpward } from '@material-ui/icons';
 
-export default class ParticipantList extends React.Component {
+import { fetchParticipants } from '../actions';
+
+class ParticipantList extends React.Component {
 
   sortBy = "";
   sortAscending = false;
 
   componentDidMount() {
-    console.log("ParticipantList componentDidMount props:", this.props);
-  }
-
-  componentDidUpdate() {
-    console.log("ParticipantList componentDidUpdate:", this.props);
-    this.render();
+    this.props.fetchParticipants();
   }
 
   renderHeader() {
@@ -88,7 +86,6 @@ export default class ParticipantList extends React.Component {
   }
 
   renderItems() {
-    console.log("renderItems called");
     return (
       <div className="list-items">
         {
@@ -110,12 +107,39 @@ export default class ParticipantList extends React.Component {
     );
   }
 
+  renderList() {
+    if (this.props.participants) {
+      return (
+        <div className="list">
+          {this.renderHeader()}
+          {this.renderItems()}
+        </div>
+      );
+    } else if (this.props.loading) {
+      return (
+        <span>Loading participants...</span>
+      );
+    } else {
+      return <span>Error loading content. Try again later.</span>
+    }
+  }
+
   render() {
     return (
-      <div className="list">
-        {this.renderHeader()}
-        {this.renderItems()}
+      <div className="participants-view">
+        {this.renderList()}
       </div>
     );
   }
 }
+
+
+
+const mapStateToProps = state => {
+  if (state.participantReducer) {
+    return state.participantReducer;
+  }
+  return {};
+};
+
+export default connect(mapStateToProps, { fetchParticipants })(ParticipantList);

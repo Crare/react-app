@@ -1,44 +1,31 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
-import { addNewParticipant } from '../actions';
+import { addNewParticipant, participantFormUpdate } from '../actions';
 
 class ParticipantForm extends React.Component {
 
   constructor(props) {
     super(props);
 
-    this.state = {
-      name: '',
-      email: '',
-      phone: ''
-    }
-
     this.addParticipant = this.addParticipant.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  componentDidUpdate(stuff) {
-    // console.log("ParticipantForm componentDidUpdate, stuff:", stuff);
-  }
-
   addParticipant(event) {
     event.preventDefault();
-    this.props.addNewParticipant(this.state);
+    const { name, email, phone } = this.props.form;
+    this.props.addNewParticipant({ name, email, phone });
   }
 
   handleInputChange(event) {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
-
-    this.setState({
-      [name]: value
-    });
+    const value = event.target.value;
+    const prop = event.target.name;
+    this.props.participantFormUpdate({ prop, value })
   }
 
   render() {
-    const { name, email, phone } = this.state;
+    const { name, email, phone } = this.props.form;
 
     return (
       <form onSubmit={this.addParticipant} className="participants-form">
@@ -61,13 +48,11 @@ class ParticipantForm extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  if (state.participantReducer.form) {
+    return { form: state.participantReducer.form };
+  }
+  return {};
+};
 
-// const mapStateToProps = state => {
-//   console.log("FORM mapStateToProps, state:", state);
-//   if (state.participantReducer.form) {
-//     const { name, email, phone } = state.participantReducer.form;
-//   }
-//   return {};
-// };
-
-export default connect(null, { addNewParticipant })(ParticipantForm);
+export default connect(mapStateToProps, { addNewParticipant, participantFormUpdate })(ParticipantForm);

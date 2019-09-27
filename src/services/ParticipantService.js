@@ -31,6 +31,9 @@ class ParticipantService {
    * @param {*} validationError returns array of validation errors.
    */
   addNewParticipant(participant, callback, validationError) {
+    participant.name = participant.name.trim();
+    participant.email = participant.email.trim();
+    participant.phone = participant.phone.trim();
     const fields = [
       { value: participant.name, type: InputValidationType.NAME },
       { value: participant.email, type: InputValidationType.EMAIL },

@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Header from './common/Header';
-import ParticipantsView from './ParticipantsView';
+import ParticipantList from './ParticipantList';
 import ParticipantForm from './ParticipantForm';
 
 import "../styles/styles.scss";
@@ -20,7 +20,7 @@ class ViewComponent extends React.Component {
           {
             this.props.errors.map((error) => {
               return (
-                <div className="error">
+                <div key={error.key} className="error">
                   {error.text}
                 </div>
               );
@@ -31,30 +31,16 @@ class ViewComponent extends React.Component {
     }
   }
 
-  renderContent() {
-    if (this.props.loading) {
-      return (
-        <div className="page-content">
-          <span>Loading...</span>
-        </div>
-      );
-    } else {
-      return (
-        <div className="page-content">
-          <h2 className="title">List of participants</h2>
-          {this.renderErrors()}
-          <ParticipantForm />
-          <ParticipantsView />
-        </div>
-      );
-    }
-  }
-
   render() {
     return (
       <div className="view-container">
         <Header text={"Nord Software"} />
-        {this.renderContent()}
+        <div className="page-content">
+          <h2 className="title">List of participants</h2>
+          {this.renderErrors()}
+          <ParticipantForm />
+          <ParticipantList />
+        </div>
       </div>
     );
   }
@@ -70,10 +56,6 @@ const mapStateToProps = state => {
       index => ({ ...state.participantReducer[index], index })
     );
     return { errors };
-  }
-
-  if (state.participantReducer.loading) {
-    return { loading: state.loading };
   }
 
   return {};

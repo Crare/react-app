@@ -5,6 +5,14 @@ import Participant from '../dto/Participant';
 
 const participantService = new ParticipantService();
 
+export const participantFormUpdate = ({ prop, value }) => {
+  return {
+    type: ActionTypes.PARTICIPANT_FORM_UPDATE,
+    payload: { prop, value }
+  };
+};
+
+
 export const fetchParticipants = () => {
   return (dispatch) => {
     dispatch({ type: ActionTypes.PARTICIPANTS_FETCHING });
@@ -26,7 +34,6 @@ export const addNewParticipant = ({ name, email, phone }) => {
         dispatch({ type: ActionTypes.PARTICIPANT_SAVE_FAIL, payload: response.error });
       }
     }, (errors) => {
-      console.log("validation errors: ", errors);
       dispatch({ type: ActionTypes.PARTICIPANT_SAVE_VALIDATION_ERROR, payload: errors });
     });
   }

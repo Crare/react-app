@@ -1,6 +1,6 @@
 export default class Participant {
 
-  id = -1;
+  id = null;
   name = "";
   email = "";
   phone = "";
