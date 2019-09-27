@@ -5,10 +5,11 @@ const INITIAL_STATE = {
   form: { name: '', email: '', phone: '' },
   loading: false,
   errors: [],
+  editParticipant: null
 };
 
 export default (state = INITIAL_STATE, action) => {
-  console.log("action.type:", action.type, "\naction.payload:", action.payload);
+  // console.log("action.type:", action.type, "\naction.payload:", action.payload);
   switch (action.type) {
 
     case ActionTypes.PARTICIPANTS_FETCH_SUCCESS:
@@ -17,7 +18,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, loading: false, errors: [], participants: action.payload };
 
     case ActionTypes.PARTICIPANT_SAVE_SUCCESS:
-      return { ...state, loading: false, errors: [], form: INITIAL_STATE.form, participants: action.payload };
+    case ActionTypes.PARTICIPANT_UPDATE_SUCCESS:
+      return { ...state, loading: false, errors: [], form: INITIAL_STATE.form, participants: action.payload, editParticipant: null };
 
     case ActionTypes.PARTICIPANT_SAVING:
     case ActionTypes.PARTICIPANTS_FETCHING:
@@ -41,7 +43,7 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, loading: false, errors: [action.payload] };
 
     default:
-      console.log("unhandled action.type: ", action.type);
+      // console.log("unhandled action.type: ", action.type);
       return state;
   }
 };

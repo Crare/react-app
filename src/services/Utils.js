@@ -24,11 +24,6 @@ class Utils {
       this.filterParticipants(filter);
     }
 
-    this.participants.map((p) => {
-      p.edit = false;
-      return p;
-    })
-
     return this.participants;
   }
 
@@ -156,9 +151,10 @@ class Utils {
   updateParticipant(participant) {
     this.participants.map((p) => {
       if (p.id === participant.id) {
-        return participant;
+        p.name = participant.name;
+        p.email = participant.email;
+        p.phone = participant.phone;
       }
-      p.edit = false;
       return p;
     });
     return this.participants;

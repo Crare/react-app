@@ -21,7 +21,7 @@ class ParticipantForm extends React.Component {
   handleInputChange(event) {
     const value = event.target.value;
     const prop = event.target.name;
-    this.props.participantFormUpdate({ prop, value })
+    this.props.participantFormUpdate({ prop, value }) // TODO: handle locally with state.
   }
 
   render() {

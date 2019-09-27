@@ -14,5 +14,6 @@ x   Push your code to a public GitHub repository
     FOLLOW THE DESIGN AS ACCURATELY AS YOU CAN (as for the logo, feel free to render a blank square)
 
 other:
-cancel not working correctly: resetting value.
-save not changing participant.edit value.
+save not removing editParticipant to null or rendering it right
+
+check TODOs!

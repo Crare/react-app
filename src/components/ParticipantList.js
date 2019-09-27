@@ -5,10 +5,16 @@ import { connect } from 'react-redux';
 import { Edit, Delete, ArrowDownward, ArrowUpward } from '@material-ui/icons';
 
 import { fetchParticipants, deleteParticipant, updateParticipant } from '../actions';
+import Participant from '../dto/Participant';
 
 class ParticipantList extends React.Component {
 
   filter = { sortAscending: true, sortByColumn: "" };
+
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
   componentDidMount() {
     this.props.fetchParticipants({ filter: this.filter });
@@ -56,42 +62,37 @@ class ParticipantList extends React.Component {
   }
 
   editRow(participantId) {
-    console.log("editRow, participantId:", participantId);
-    let participants = this.props.participants;
-    participants.map((p) => {
+    const { editParticipant } = this.state;
+    this.props.participants.forEach((p) => {
       if (p.id === participantId) {
-        p.edit = true;
-      } else {
-        p.edit = false;
+        if (editParticipant && editParticipant.id === p.id) {
+          this.setState({ editParticipant: null });
+        } else {
+          this.setState({ editParticipant: new Participant(p.id, p.name, p.email, p.phone) });
+        }
       }
-      return p;
     });
-    this.setState({ participants });
   }
 
   deleteParticipant(participantId) {
     this.props.deleteParticipant({ participantId });
   }
 
-  handleInputChange(participant, property, newValue) {
-    let participants = this.props.participants;
-    participants.map((p) => {
-      if (p.id === participant.id) {
-        p[property] = newValue;
-      }
-      return p;
-    });
-    this.setState({ participants });
+  handleInputChange(property, newValue) {
+    const { editParticipant } = this.state;
+    editParticipant[property] = newValue;
+    this.setState({ editParticipant });
   }
 
   renderItemContent(participant, property, placeholder) {
-    if (participant.edit) {
+    const { editParticipant } = this.state;
+    if (editParticipant && participant.id === editParticipant.id) {
       return (
         <input
           name={property}
-          value={participant[property]}
+          value={editParticipant[property]}
           placeholder={placeholder}
-          onChange={(newValue) => this.handleInputChange(participant, property, newValue.target.value)} />
+          onChange={(newValue) => this.handleInputChange(property, newValue.target.value)} />
       );
     }
     return (
@@ -100,23 +101,21 @@ class ParticipantList extends React.Component {
   }
 
   cancelEdit() {
-    // let participants = this.props.participants;
-    // participants.map((p) => {
-    //   p.edit = false;
-    //   return p;
-    // });
-    // this.setState({ participants });
-    this.props.fetchParticipants({ filter: this.filter });
-    this.setState({ participants: this.props.participants });
+    this.setState({ editParticipant: null });
   }
 
   updateParticipant(participant) {
-    console.log("updateParticipant", participant);
-    this.props.updateParticipant({ participant });
+    if (participant.id === this.state.editParticipant.id) {
+      this.props.updateParticipant({ participant: this.state.editParticipant });
+      // TODO: update this.state.editParticipant to null!
+    } else {
+      console.error("wrong id: " + participant.id + " is not " + this.state.editParticipant.id);
+    }
   }
 
   renderRowOptions(participant) {
-    if (participant.edit) {
+    const { editParticipant } = this.state;
+    if (editParticipant && participant.id === editParticipant.id) {
       return (
         <span>
           <button className="button-blue-text" onClick={() => this.cancelEdit()}>Cancel</button>
@@ -186,7 +185,7 @@ class ParticipantList extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log("mapStateToProps, state", state);
+  // console.log("ParticipantList.mapStateToProps, state", state);
   if (state.participantReducer) {
     return state.participantReducer;
   }

@@ -6,8 +6,8 @@ import { Validator, InputValidationType } from './Validator';
  * @method getParticipantList
  * @method generateParticipants
  * @method addNewParticipant
- * @method updateParticipant TODO:
- * @method deleteParticipant TODO:
+ * @method deleteParticipant
+ * @method updateParticipant
  */
 class ParticipantService {
 
@@ -57,7 +57,6 @@ class ParticipantService {
   }
 
   updateParticipant(participant, callback, validationError) {
-    console.log(participant);
     const fields = this.getFormFields(participant);
     const errors = this.validator.validateFields(fields);
     if (errors.length > 0) {
