@@ -38,3 +38,16 @@ export const addNewParticipant = ({ name, email, phone }) => {
     });
   }
 };
+
+export const deleteParticipant = ({ participantId }) => {
+  return (dispatch) => {
+    dispatch({ type: ActionTypes.PARTICIPANT_DELETING });
+    participantService.deleteParticipant(participantId, (response) => {
+      if (response.participants) {
+        dispatch({ type: ActionTypes.PARTICIPANT_DELETE_SUCCESS, payload: response.participants });
+      } else if (response.error) {
+        dispatch({ type: ActionTypes.PARTICIPANT_DELETE_FAIL, payload: response.error });
+      }
+    });
+  }
+}

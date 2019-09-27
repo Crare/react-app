@@ -12,6 +12,8 @@ export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
 
     case ActionTypes.PARTICIPANTS_FETCH_SUCCESS:
+    case ActionTypes.PARTICIPANTS_SORT:
+    case ActionTypes.PARTICIPANT_DELETE_SUCCESS:
       return { ...state, loading: false, errors: [], participants: action.payload };
 
     case ActionTypes.PARTICIPANT_SAVE_SUCCESS:
@@ -19,6 +21,7 @@ export default (state = INITIAL_STATE, action) => {
 
     case ActionTypes.PARTICIPANT_SAVING:
     case ActionTypes.PARTICIPANTS_FETCHING:
+    case ActionTypes.PARTICIPANT_DELETING:
       return { ...state, loading: true, errors: [] };
 
     case ActionTypes.PARTICIPANT_SAVE_FAIL:
@@ -31,8 +34,8 @@ export default (state = INITIAL_STATE, action) => {
       // action.payload === { prop: 'name', value: 'jane' } 
       return { ...state, form: { ...state.form, [action.payload.prop]: action.payload.value } };
 
-    case ActionTypes.PARTICIPANTS_SORT:
-      return { ...state, participants: action.payload };
+    case ActionTypes.PARTICIPANT_DELETE_FAIL:
+      return { ...state, loading: false, errors: [action.payload] };
 
     default:
       return state;

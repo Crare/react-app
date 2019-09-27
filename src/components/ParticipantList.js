@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { Edit, Delete, ArrowDownward, ArrowUpward } from '@material-ui/icons';
 
-import { fetchParticipants } from '../actions';
+import { fetchParticipants, deleteParticipant } from '../actions';
 
 class ParticipantList extends React.Component {
 
@@ -61,7 +61,7 @@ class ParticipantList extends React.Component {
   }
 
   deleteParticipant(participantId) {
-    console.log("deleteParticipant, participantId:", participantId);
+    this.props.deleteParticipant({ participantId });
   }
 
   renderItems() {
@@ -121,4 +121,4 @@ const mapStateToProps = state => {
   return {};
 };
 
-export default connect(mapStateToProps, { fetchParticipants })(ParticipantList);
+export default connect(mapStateToProps, { fetchParticipants, deleteParticipant })(ParticipantList);
