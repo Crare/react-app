@@ -19,8 +19,8 @@ class ParticipantService {
    * Fetches participants
    * @returns callback with list of Participant-objects.
    */
-  fetchParticipants(callback) {
-    callback(this.utils.getParticipants());
+  fetchParticipants(filter, callback) {
+    callback(this.utils.getParticipants(filter));
   }
 
   /**

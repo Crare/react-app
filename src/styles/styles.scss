@@ -245,3 +245,21 @@ button:hover {
   color: #ededed;
   transition: 0.5s;
 }
+
+.icon-container {
+  display: inline-block;
+  position: relative;
+  .icon {
+    color: #505050;
+    position: absolute;
+    padding-left: 0px;
+    top: -16px;
+    left: 10px;
+    width: 0.8em;
+    height: 0.8em;
+  }
+}
+
+.list-header-sortby {
+  color: #505050 !important;
+}

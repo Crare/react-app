@@ -9,22 +9,26 @@ import { fetchParticipants } from '../actions';
 class ParticipantList extends React.Component {
 
   sortBy = "";
-  sortAscending = false;
+  sortAscending = true;
 
   componentDidMount() {
-    this.props.fetchParticipants();
+    this.props.fetchParticipants({});
+  }
+
+  addHeaderSortStyling(sort) {
+    return this.sortBy === sort ? ' list-header-sortby' : '';
   }
 
   renderHeader() {
     return (
       <div className="list-header">
-        <div className="list-header-item flex-width-2" onClick={this.sortByColumn("name")}>
+        <div className={'list-header-item flex-width-2' + this.addHeaderSortStyling("name")} onClick={() => this.sortByColumn("name")}>
           Name {this.renderSortIcon("name")}
         </div>
-        <div className="list-header-item flex-width-3" onClick={this.sortByColumn("email")}>
+        <div className={'list-header-item flex-width-3' + this.addHeaderSortStyling("email")} onClick={() => this.sortByColumn("email")}>
           E-mail address {this.renderSortIcon("email")}
         </div>
-        <div className="list-header-item flex-width-2" onClick={this.sortByColumn("phone")}>
+        <div className={'list-header-item flex-width-2' + this.addHeaderSortStyling("phone")} onClick={() => this.sortByColumn("phone")}>
           Phone number {this.renderSortIcon("phone")}
         </div>
         <div className="list-header-item flex-width-2">
@@ -36,49 +40,24 @@ class ParticipantList extends React.Component {
   renderSortIcon(dataValue) {
     if (this.sortBy === dataValue) {
       if (this.sortAscending) {
-        return <ArrowUpward />
+        return <div className="icon-container"><ArrowUpward className="icon" /></div>
       }
-      return <ArrowDownward />
+      return <div className="icon-container"><ArrowDownward className="icon" /></div>
     }
   }
 
   sortByColumn(dataValue) {
-    if (this.lastSort === dataValue) {
+    if (dataValue === this.sortBy) {
       this.sortAscending = !this.sortAscending;
-    }
-
-    const compare = (a, b, attr) => {
-      if (a[attr] < b[attr]) {
-        return 1;
-      }
-      if (a[attr] > b[attr]) {
-        return -1;
-      }
-      return 0;
-    }
-
-    const compareOpposite = (a, b, attr) => {
-      if (a[attr] < b[attr]) {
-        return -1;
-      }
-      if (a[attr] > b[attr]) {
-        return 1;
-      }
-      return 0;
-    }
-
-    if (this.sortAscending) {
-      this.props.participants.sort((a, b) => compare(a, b, dataValue));
     } else {
-      this.props.participants.sort((a, b) => compareOpposite(a, b, dataValue));
+      this.sortAscending = true;
     }
-
-    this.lastSort = dataValue;
+    this.props.fetchParticipants({ filter: { sortByColumn: dataValue, sortAscending: this.sortAscending } });
+    this.sortBy = dataValue;
   }
 
   editRow(participantId) {
     console.log("editRow, participantId:", participantId);
-
   }
 
   deleteParticipant(participantId) {

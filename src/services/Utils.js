@@ -14,11 +14,47 @@ class Utils {
     this.participants = [];
   }
 
-  getParticipants() {
+  getParticipants(filter) {
     if (this.participants.length === 0) {
       this.generateParticipants(20);
     }
+
+    if (filter) {
+      this.filterParticipants(filter);
+    }
+
     return this.participants;
+  }
+
+  filterParticipants(filter) {
+    if (filter.sortByColumn) {
+
+      const compare = (a, b, attr) => {
+        if (a[attr] < b[attr]) {
+          return -1;
+        }
+        if (a[attr] > b[attr]) {
+          return 1;
+        }
+        return 0;
+      }
+
+      const compareOpposite = (a, b, attr) => {
+        if (a[attr] < b[attr]) {
+          return 1;
+        }
+        if (a[attr] > b[attr]) {
+          return -1;
+        }
+        return 0;
+      }
+
+      if (filter.sortAscending) {
+        this.participants.sort((a, b) => compare(a, b, filter.sortByColumn));
+      } else {
+        this.participants.sort((a, b) => compareOpposite(a, b, filter.sortByColumn));
+      }
+    }
   }
 
   /**

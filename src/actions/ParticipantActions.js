@@ -13,11 +13,11 @@ export const participantFormUpdate = ({ prop, value }) => {
 };
 
 
-export const fetchParticipants = () => {
+export const fetchParticipants = ({ filter }) => {
   return (dispatch) => {
     dispatch({ type: ActionTypes.PARTICIPANTS_FETCHING });
 
-    participantService.fetchParticipants((participants) => {
+    participantService.fetchParticipants(filter, (participants) => {
       dispatch({ type: ActionTypes.PARTICIPANTS_FETCH_SUCCESS, payload: participants });
     });
   };
@@ -37,5 +37,4 @@ export const addNewParticipant = ({ name, email, phone }) => {
       dispatch({ type: ActionTypes.PARTICIPANT_SAVE_VALIDATION_ERROR, payload: errors });
     });
   }
-
 };
