@@ -9,6 +9,6 @@ x   Create a form for adding new participants to the table (remember to validate
 x   Add support for deleting rows
 x   Make each column sortable upon clicking on a column header
     Write a developer-friendly installation guide on how to run the app
-    Push your code to a public GitHub repository
+x   Push your code to a public GitHub repository
     Deploy a live build on the internet
     FOLLOW THE DESIGN AS ACCURATELY AS YOU CAN (as for the logo, feel free to render a blank square)
