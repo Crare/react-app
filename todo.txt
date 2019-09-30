@@ -1,19 +1,15 @@
 x = done
-
+/ = made by create-react-app in readme
 
 x   Use Create React App to scaffold your application
 x   Generate 20 participants that contain randomized values for the following properties: id, name, email address, and phone number
 x   Render a table that displays the participants on individual rows
 x   Create a form for adding new participants to the table (remember to validate the form)
-    Make each participant editable by clicking on a table cell (inline editing)
+x   Make each participant editable by clicking on a table cell (inline editing)
 x   Add support for deleting rows
 x   Make each column sortable upon clicking on a column header
-    Write a developer-friendly installation guide on how to run the app
+/    Write a developer-friendly installation guide on how to run the app
 x   Push your code to a public GitHub repository
-    Deploy a live build on the internet
-    FOLLOW THE DESIGN AS ACCURATELY AS YOU CAN (as for the logo, feel free to render a blank square)
+x   Deploy a live build on the internet
+x   FOLLOW THE DESIGN AS ACCURATELY AS YOU CAN (as for the logo, feel free to render a blank square)
 
-other:
-save not removing editParticipant to null or rendering it right
-
-check TODOs!
