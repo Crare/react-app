@@ -82,11 +82,11 @@ body {
 }
 
 .button-save {
-  padding: 0px 20px;
+  padding: 0px 18px;
 }
 
 .button-cancel {
-  padding: 0px 20px;
+  padding: 0px 18px;
 }
 
 .fixed-width-container {
@@ -203,6 +203,15 @@ button {
         border-bottom: 1px solid #eee;
         .list-item-property {
           padding-right: 24px;
+          input {
+            margin-top: -10px;
+          }
+          .buttons {
+            margin-top: -8px;
+            button {
+              margin-left: 6px;
+            }
+          }
         }
       }
     }

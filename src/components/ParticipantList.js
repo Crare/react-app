@@ -123,10 +123,10 @@ class ParticipantList extends React.Component {
     const { editParticipant } = this.state;
     if (editParticipant && participant.id === editParticipant.id) {
       return (
-        <span>
+        <div className="buttons">
           <button className="button-blue-text button-cancel" onClick={() => this.cancelEdit()}>Cancel</button>
           <button className="button-blue button-save" onClick={() => this.updateParticipant(participant)}>Save</button>
-        </span>
+        </div>
       );
     }
     return (
