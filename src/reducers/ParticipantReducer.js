@@ -24,8 +24,10 @@ export default (state = INITIAL_STATE, action) => {
     case ActionTypes.PARTICIPANT_SAVING:
     case ActionTypes.PARTICIPANTS_FETCHING:
     case ActionTypes.PARTICIPANT_DELETING:
-    case ActionTypes.PARTICIPANT_UPDATE_SAVING:
       return { ...state, loading: true, errors: [] };
+
+    case ActionTypes.PARTICIPANT_UPDATE_SAVING:
+      return { ...state, loading: true, errors: [], editParticipant: action.payload };
 
     case ActionTypes.PARTICIPANT_SAVE_FAIL:
       return { ...state, loading: false, form: INITIAL_STATE.form, errors: action.payload };
@@ -41,6 +43,9 @@ export default (state = INITIAL_STATE, action) => {
     case ActionTypes.PARTICIPANT_DELETE_FAIL:
     case ActionTypes.PARTICIPANT_UPDATE_FAIL:
       return { ...state, loading: false, errors: [action.payload] };
+
+    case ActionTypes.PARTICIPANT_ERROR_EMPTY:
+      return { ...state, errors: INITIAL_STATE.errors };
 
     default:
       // console.log("unhandled action.type: ", action.type);

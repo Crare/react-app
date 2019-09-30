@@ -16,8 +16,12 @@ export const participantFormUpdate = ({ prop, value }) => {
 export const fetchParticipants = ({ filter }) => {
   return (dispatch) => {
     dispatch({ type: ActionTypes.PARTICIPANTS_FETCHING });
-    participantService.fetchParticipants(filter, (participants) => {
-      dispatch({ type: ActionTypes.PARTICIPANTS_FETCH_SUCCESS, payload: participants });
+    participantService.fetchParticipants(filter, (response) => {
+      if (response.participants) {
+        dispatch({ type: ActionTypes.PARTICIPANTS_FETCH_SUCCESS, payload: response.participants });
+      } else {
+        dispatch({ type: ActionTypes.PARTICIPANTS_FETCH_FAIL, payload: response.errors });
+      }
     });
   };
 };
@@ -53,15 +57,23 @@ export const deleteParticipant = ({ participantId }) => {
 
 export const updateParticipant = ({ participant }) => {
   return (dispatch) => {
-    dispatch({ type: ActionTypes.PARTICIPANT_UPDATE_SAVING });
-    participantService.updateParticipant(participant, (response) => {
-      if (response.participants) {
-        dispatch({ type: ActionTypes.PARTICIPANT_UPDATE_SUCCESS, payload: response.participants });
-      } else if (response.error) {
-        dispatch({ type: ActionTypes.PARTICIPANT_UPDATE_FAIL, payload: response.error });
-      }
-    }, (errors) => {
-      dispatch({ type: ActionTypes.PARTICIPANT_UPDATE_VALIDATION_ERROR, payload: errors });
-    });
+    dispatch({ type: ActionTypes.PARTICIPANT_UPDATE_SAVING, payload: participant });
+
+    setTimeout(() => { // timeout because mapStateToProps() won't get called otherwise and next dispatch will override it.
+      participantService.updateParticipant(participant, (response) => {
+        if (response.participants) {
+          dispatch({ type: ActionTypes.PARTICIPANT_UPDATE_SUCCESS, payload: response.participants });
+        } else if (response.error) {
+          dispatch({ type: ActionTypes.PARTICIPANT_UPDATE_FAIL, payload: response.error });
+        }
+      }, (errors) => {
+        dispatch({ type: ActionTypes.PARTICIPANT_UPDATE_VALIDATION_ERROR, payload: errors });
+      });
+    }, 100)
+
   }
+}
+
+export const participantEmptyErrors = () => {
+  return { type: ActionTypes.PARTICIPANT_ERROR_EMPTY };
 }

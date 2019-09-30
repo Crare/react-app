@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { Edit, Delete, ArrowDownward, ArrowUpward } from '@material-ui/icons';
 
-import { fetchParticipants, deleteParticipant, updateParticipant } from '../actions';
+import { fetchParticipants, deleteParticipant, updateParticipant, participantEmptyErrors } from '../actions';
 import Participant from '../dto/Participant';
 
 class ParticipantList extends React.Component {
@@ -18,6 +18,12 @@ class ParticipantList extends React.Component {
 
   componentDidMount() {
     this.props.fetchParticipants({ filter: this.filter });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.editParticipant != null && this.props.editParticipant === null) {
+      this.setState({ editParticipant: null });
+    }
   }
 
   addHeaderSortStyling(sort) {
@@ -102,12 +108,12 @@ class ParticipantList extends React.Component {
 
   cancelEdit() {
     this.setState({ editParticipant: null });
+    this.props.participantEmptyErrors();
   }
 
   updateParticipant(participant) {
     if (participant.id === this.state.editParticipant.id) {
       this.props.updateParticipant({ participant: this.state.editParticipant });
-      // TODO: update this.state.editParticipant to null!
     } else {
       console.error("wrong id: " + participant.id + " is not " + this.state.editParticipant.id);
     }
@@ -192,4 +198,4 @@ const mapStateToProps = state => {
   return {};
 };
 
-export default connect(mapStateToProps, { fetchParticipants, deleteParticipant, updateParticipant })(ParticipantList);
+export default connect(mapStateToProps, { fetchParticipants, deleteParticipant, updateParticipant, participantEmptyErrors })(ParticipantList);

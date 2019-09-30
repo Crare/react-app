@@ -24,7 +24,7 @@ class Utils {
       this.filterParticipants(filter);
     }
 
-    return this.participants;
+    return { participants: this.participants };
   }
 
   filterParticipants(filter) {
@@ -157,7 +157,7 @@ class Utils {
       }
       return p;
     });
-    return this.participants;
+    return { participants: this.participants };
   }
 
 }
