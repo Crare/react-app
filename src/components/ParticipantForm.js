@@ -30,13 +30,13 @@ class ParticipantForm extends React.Component {
     return (
       <form onSubmit={this.addParticipant} className="participants-form">
         <div className="form-item flex-width-2">
-          <input value={name} name="name" placeholder="Full name" onChange={this.handleInputChange} />
+          <input value={name} type="text" name="name" placeholder="Full name" onChange={this.handleInputChange} />
         </div>
         <div className="form-item flex-width-3">
-          <input value={email} name="email" placeholder="E-mail address" onChange={this.handleInputChange} />
+          <input value={email} type="email" name="email" placeholder="E-mail address" onChange={this.handleInputChange} />
         </div>
         <div className="form-item flex-width-2">
-          <input value={phone} name="phone" placeholder="Phone number" onChange={this.handleInputChange} />
+          <input value={phone} type="tel" name="phone" placeholder="Phone number" onChange={this.handleInputChange} />
         </div>
         <div className="form-item flex-width-1">
         </div>

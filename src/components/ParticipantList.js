@@ -90,12 +90,13 @@ class ParticipantList extends React.Component {
     this.setState({ editParticipant });
   }
 
-  renderItemContent(participant, property, placeholder) {
+  renderItemContent(participant, property, inputType, placeholder) {
     const { editParticipant } = this.state;
     if (editParticipant && participant.id === editParticipant.id) {
       return (
         <input
           name={property}
+          type={inputType}
           value={editParticipant[property]}
           placeholder={placeholder}
           onChange={(newValue) => this.handleInputChange(property, newValue.target.value)} />
@@ -145,13 +146,13 @@ class ParticipantList extends React.Component {
             return (
               <div key={p.id} className="list-item">
                 <div className="list-item-property flex-width-2">
-                  {this.renderItemContent(p, 'name', 'Full name')}
+                  {this.renderItemContent(p, 'name', 'text', 'Full name')}
                 </div>
                 <div className="list-item-property flex-width-3">
-                  {this.renderItemContent(p, 'email', 'E-mail address')}
+                  {this.renderItemContent(p, 'email', 'email', 'E-mail address')}
                 </div>
                 <div className="list-item-property flex-width-2">
-                  {this.renderItemContent(p, 'phone', 'Phone number')}
+                  {this.renderItemContent(p, 'phone', 'tel', 'Phone number')}
                 </div>
                 <div className="list-item-property flex-width-2 right no-padding" >
                   {this.renderRowOptions(p)}
